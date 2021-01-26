@@ -1,43 +1,32 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
 const {ccclass, property} = cc._decorator;
+const FEATURE_NUM = 5;
+
 import { COLOR, TYPE } from "./Define";
-import { Head, Eyes, Mouth, Body, Feet } from "./Feature";
+import Feature, { Head, Eyes, Mouth, Body, Nose } from "./Feature";
 import { Model } from "./Model";
 @ccclass
-export default class NewClass extends cc.Component {
+export default class GameLogicBase extends cc.Component {
 
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
+    sampleModel:Model;
+    mainModel:Model;
+    result:number[];
 
     start () {
-
+        this.mainModel = new Model();
     }
 
-    CreateNewModel() {
-        var model = new Model(
+    CreateSampleModel() {
+        this.sampleModel = new Model(
             new Head(this.randomIntFromInterval(0, TYPE.END - 1), 
                      this.randomIntFromInterval(0, COLOR.END - 1)),
             new Eyes(this.randomIntFromInterval(0, TYPE.END - 1), 
                      this.randomIntFromInterval(0, COLOR.END - 1)),
+            new Nose(this.randomIntFromInterval(0, TYPE.END - 1), 
+                     this.randomIntFromInterval(0, COLOR.END - 1)),
             new Mouth(this.randomIntFromInterval(0, TYPE.END - 1), 
                      this.randomIntFromInterval(0, COLOR.END - 1)),
             new Body(this.randomIntFromInterval(0, TYPE.END - 1), 
-                     this.randomIntFromInterval(0, COLOR.END - 1)),
-            new Feet(this.randomIntFromInterval(0, TYPE.END - 1), 
-                     this.randomIntFromInterval(0, COLOR.END - 1))         
+                     this.randomIntFromInterval(0, COLOR.END - 1)),         
         );
     }
 
@@ -46,15 +35,25 @@ export default class NewClass extends cc.Component {
     }
       
     Initialize() {
-        
+        //Create grid features, model object,..
     }
 
     NewSection() {
-        this.CreateNewModel();
+        this.CreateSampleModel();
         this.Initialize();
-    } 
-    
-    // update (dt) {}
+    }
 
-      
+    UpdateModel(feature:Feature) {
+        this.mainModel.Update(feature);
+    }
+    
+    CheckResult() {
+        this.result = this.sampleModel.Compare(this.mainModel)
+        //call UI to update result
+
+        if(this.result == [FEATURE_NUM, 0])
+            return; //Game won
+    }
+
+    // update (dt) {}     
 }
