@@ -14,3 +14,13 @@ export enum COLOR {
     BLUE,
     END,
 }
+
+export enum SKIN {
+    AQUA,
+    BLUE,
+    GREEN,
+    ORANGE,
+    PINK,
+    YELLOW,
+    END
+}

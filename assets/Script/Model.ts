@@ -1,26 +1,29 @@
+import { SKIN } from "./Define";
 import Feature, { Body, Eyes, Nose, Head, Mouth } from "./Feature";
 
 export class Model {
+    skin:SKIN;
     head:Head;
     eyes:Eyes;
     mouth:Mouth;
     body:Body;
     nose:Nose;
 
-    constructor(head:Head = null, eyes:Eyes = null, mouth:Mouth = null, body:Body = null, nose:Nose = null) {
-        this.head = head;
+    constructor(skin:SKIN = null, eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, head:Head = null, body:Body = null) {
+        this.skin = skin;
         this.eyes = eyes;
-        this.mouth = mouth;
-        this.body = body;
         this.nose = nose;
+        this.mouth = mouth;
+        this.head = head;
+        this.body = body;     
     }
 
-    Update(head:Head = null, eyes:Eyes = null, mouth:Mouth = null, body:Body = null, nose:Nose = null) {
-        this.head = head;
-        this.eyes = eyes;
-        this.mouth = mouth;
-        this.body = body;
-        this.nose = nose;
+    Update(eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, head:Head = null, body:Body = null) {
+        this.eyes = eyes != null? eyes : this.eyes;
+        this.nose = nose != null? nose : this.nose;
+        this.mouth = mouth != null? mouth : this.mouth;
+        this.head = head != null? head : this.head;
+        this.body = body != null? body : this.body;    
     }
 
     Compare(model:Model) : Array<number> {
