@@ -8,6 +8,7 @@ const HARD = 5;
 import { COLOR, SKIN, TYPE } from "./Define";
 import Feature, { Head, Eyes, Mouth, Body, Nose } from "./Feature";
 import { Model } from "./Model";
+import SetItem from "./SetItem";
 @ccclass
 export default class GameLogicBase extends cc.Component {
     @property({type: [cc.Prefab]})
@@ -56,18 +57,22 @@ export default class GameLogicBase extends cc.Component {
 
         //Create grid items
         var itemList = []
-        var position = new cc.Vec3(0,0,1);
         for(var i = 0; i < this.gameMode; i++)
-        {
+        {           
+            var setItem = cc.instantiate(this.SetItems[i]);
+            this.itemLayoutPanel.addChild(setItem);
+            
             itemList[i] = [];
             for(var j = 0; j < this.gameMode; j++) {     
                 itemList[i][j] = new Feature(this.featuresType, i);
             }
-            const setItems = cc.instantiate(this.SetItems[i]);
-            setItems.position = position;
-            this.itemLayoutPanel.addChild(setItems);
-            position.x += 50;
-        }      
+
+            setItem.getComponent(SetItem).Init(itemList[i][0], 
+                                                itemList[i][1],
+                                                itemList[i][2],
+                                                itemList[i][3],
+                                                itemList[i][4]);
+        }
     }
 
     NewSection() {

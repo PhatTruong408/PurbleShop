@@ -24,3 +24,11 @@ export enum SKIN {
     YELLOW,
     END
 }
+
+export enum FEATURE {
+    HEAD,
+    EYES,
+    NOSE,
+    MOUTH,
+    BODY
+}

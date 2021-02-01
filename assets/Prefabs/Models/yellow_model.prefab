@@ -79,7 +79,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "head",
+    "_name": "top",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -179,7 +179,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "15a91521-0a31-4321-bc4a-dab50d4b7cbc"
     },
     "fileId": "81wJ9Q0/5Exb5KwM6TYWh/",
     "sync": false
@@ -222,7 +222,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "15a91521-0a31-4321-bc4a-dab50d4b7cbc"
     },
     "fileId": "1f6+3AY7hG7Zc0ZsihHuzM",
     "sync": false

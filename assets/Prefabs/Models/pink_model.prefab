@@ -79,7 +79,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "buildapurblefeaturenodxtsheet1_56_2",
+    "_name": "top",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -179,7 +179,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "b82ca624-fab4-4b78-b513-6e1d917a119c"
     },
     "fileId": "58aIQhlgdH9bPDy582IljE",
     "sync": false
@@ -222,7 +222,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "b82ca624-fab4-4b78-b513-6e1d917a119c"
     },
     "fileId": "a0SsfjWYxC2bh15OdDQ7Kd",
     "sync": false
