@@ -6,22 +6,29 @@ export enum TYPE {
     E,
     END,
 }
+
+export enum HEADTYPE {
+    ROUND,
+    CONE,
+    HEART,
+}
+
 export enum COLOR {
-    YELLOW,
-    PINK,
-    PURPLE,
     GREEN,
     BLUE,
+    YELLOW,
+    PURPLE,
+    PINK,
     END,
 }
 
 export enum SKIN {
-    AQUA,
-    BLUE,
-    GREEN,
-    ORANGE,
-    PINK,
-    YELLOW,
+    AQUA_1,
+    BLUE_2,
+    GREEN_3,   
+    PINK_1,
+    YELLOW_2,
+    ORANGE_3,
     END
 }
 

@@ -1,10 +1,12 @@
-import {TYPE, COLOR} from "./Define";
+import {TYPE, COLOR, HEADTYPE} from "./Define";
 
 export default class Feature {
-    constructor(type:TYPE, color:COLOR) {
+    constructor(type:TYPE, color:COLOR, headtype:HEADTYPE = HEADTYPE.ROUND) {
         this.type = type;
         this.color = color;
+        this.headType = headtype;
     }
+    headType:HEADTYPE;
     type:TYPE;
     color:COLOR;
 }

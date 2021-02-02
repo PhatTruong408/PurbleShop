@@ -7,10 +7,13 @@ const HARD = 5;
 
 import { COLOR, SKIN, TYPE } from "./Define";
 import Feature, { Head, Eyes, Mouth, Body, Nose } from "./Feature";
+import GameUI from "./GameUI";
 import { Model } from "./Model";
 import SetItem from "./SetItem";
 @ccclass
 export default class GameLogicBase extends cc.Component {
+    @property({type: [cc.Node]})
+    ModelTemplate: cc.Node = null
     @property({type: [cc.Prefab]})
     Models = []
     @property({type: [cc.Prefab]})
@@ -23,9 +26,11 @@ export default class GameLogicBase extends cc.Component {
     sampleModel:Model;
     mainModel:Model;
     result:number[];
+    gameUI:GameUI;
 
     start () {
         this.mainModel = new Model();
+        this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
         this.NewSection();
     }
 
@@ -51,9 +56,10 @@ export default class GameLogicBase extends cc.Component {
       
     Initialize() {
         //Create model object
-        const model = cc.instantiate(this.Models[this.sampleModel.skin]);
-        model.position = new cc.Vec3(-220,-85,1);
+        var model = cc.instantiate(this.Models[this.sampleModel.skin]);
+        model.position = this.ModelTemplate.position;
         this.node.parent.addChild(model);
+        this.gameUI.mainModel = model;
 
         //Create grid items
         var itemList = []
@@ -64,7 +70,7 @@ export default class GameLogicBase extends cc.Component {
             
             itemList[i] = [];
             for(var j = 0; j < this.gameMode; j++) {     
-                itemList[i][j] = new Feature(this.featuresType, i);
+                itemList[i][j] = new Feature(this.featuresType, i, this.sampleModel.skin % 3);
             }
 
             setItem.getComponent(SetItem).Init(itemList[i][0], 
