@@ -12,8 +12,8 @@ import { Model } from "./Model";
 import SetItem from "./SetItem";
 @ccclass
 export default class GameLogicBase extends cc.Component {
-    @property({type: [cc.Node]})
-    ModelTemplate: cc.Node
+    @property({type: cc.Node})
+    ModelTemplate: cc.Node = null
     @property({type: [cc.Prefab]})
     Models = []
     @property({type: [cc.Prefab]})
