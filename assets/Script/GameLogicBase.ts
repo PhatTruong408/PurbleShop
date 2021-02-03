@@ -13,7 +13,7 @@ import SetItem from "./SetItem";
 @ccclass
 export default class GameLogicBase extends cc.Component {
     @property({type: [cc.Node]})
-    ModelTemplate: cc.Node = null
+    ModelTemplate: cc.Node
     @property({type: [cc.Prefab]})
     Models = []
     @property({type: [cc.Prefab]})
@@ -91,11 +91,8 @@ export default class GameLogicBase extends cc.Component {
     }
     
     CheckResult() {
-        this.result = this.sampleModel.Compare(this.mainModel)
+        return this.sampleModel.Compare(this.mainModel);
         //call UI to update result
-
-        if(this.result == [FEATURE_NUM, 0])
-            return; //Game won
     }
 
     // update (dt) {}     

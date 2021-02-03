@@ -5,7 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 import GameLogicBase from "./GameLogicBase"
-import {FEATURE} from "./Define";
+import {FEATURE, HEADTYPE} from "./Define";
 import Feature from "./Feature";
 const {ccclass, property} = cc._decorator;
 
@@ -14,17 +14,30 @@ export default class GameUI extends cc.Component {
     mainModel: cc.Node;
 
     @property({type: [cc.SpriteFrame]})
-    HeadList = [];
+    RoundHeadList = [];
     @property({type: [cc.SpriteFrame]})
-    EyesList = [];
+    ConeHeadList = [];
+    @property({type: [cc.SpriteFrame]})
+    HeartHeadList = [];
+    @property({type: [cc.SpriteFrame]})
+    WideEyesList = [];
+    @property({type: [cc.SpriteFrame]})
+    CloseEyesList = [];
     @property({type: [cc.SpriteFrame]})
     NoseList = [];
     @property({type: [cc.SpriteFrame]})
     MouthList = [];
     @property({type: [cc.SpriteFrame]})
     BodyList = [];
-    
-    gameLogic: GameLogicBase; 
+
+    @property(cc.Label)
+    Green: cc.Label = null
+    @property(cc.Label)
+    Red: cc.Label = null
+
+    gameLogic: GameLogicBase;
+    HeadList: cc.SpriteFrame[];
+    EyesList: cc.SpriteFrame[];
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
@@ -34,7 +47,33 @@ export default class GameUI extends cc.Component {
     }
 
     OnPressedCheckButton () {
-        this.gameLogic.CheckResult();
+        var result = this.gameLogic.CheckResult();
+        this.Green.string = result[0].toString();
+        this.Red.string = result[1].toString();
+        if(result[0] == 5)
+            return; //game won
+        else {
+            var node = cc.instantiate(this.mainModel);
+            this.mainModel.parent.addChild(node);
+            node.position = new cc.Vec3(0,0,0);
+        }            
+    }
+
+    InitModelType (headtype:HEADTYPE) {
+        switch (headtype) {
+            case HEADTYPE.ROUND:
+                this.HeadList = this.RoundHeadList;
+                this.EyesList = this.CloseEyesList;
+                break;
+            case HEADTYPE.CONE:
+                this.HeadList = this.ConeHeadList;
+                this.EyesList = this.CloseEyesList;
+                break;
+            case HEADTYPE.HEART:
+                this.HeadList = this.HeartHeadList;
+                this.EyesList = this.WideEyesList;
+                break;
+        }
     }
 
     UpdateMainModel (id:FEATURE, feature:Feature) {
@@ -49,7 +88,6 @@ export default class GameUI extends cc.Component {
                 var child = this.mainModel.getChildByName("eyes");
                 child.getComponent(cc.Sprite).spriteFrame = this.EyesList[feature.color];
                 child.active = true;
-                break;
                 break;
             }
             case FEATURE.NOSE: {
@@ -70,7 +108,6 @@ export default class GameUI extends cc.Component {
                 child.active = true;
                 break;
             }
-            default: break;
         }
     }
 
