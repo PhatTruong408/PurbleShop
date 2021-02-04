@@ -32,6 +32,7 @@ export class Model {
     Compare(model:Model) : Array<number> {
         var green: number = 0;
         var red: number = 0;
+        
         if(this.head.color == model.head.color)
             green++;
         else red++;

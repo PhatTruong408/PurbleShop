@@ -29,25 +29,32 @@ export default class GameLogicBase extends cc.Component {
     gameUI:GameUI;
 
     start () {
-        this.mainModel = new Model();
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
         this.NewSection();
     }
 
     CreateSampleModel() {
         this.featuresType = this.randomIntFromInterval(0, TYPE.END - 1);
+
         this.sampleModel = new Model(
             this.randomIntFromInterval(0, SKIN.END - 1),       
-            new Eyes(this.featuresType, this.randomIntFromInterval(0, this.gameMode - 1)),
-            new Nose(this.featuresType, this.randomIntFromInterval(0, this.gameMode - 1)),     
-            new Mouth(this.featuresType, this.randomIntFromInterval(0, this.gameMode - 1))
+            new Eyes(this.featuresType, this.randomIntFromInterval(0, this.gameMode)),
+            new Nose(this.featuresType, this.randomIntFromInterval(0, this.gameMode)),     
+            new Mouth(this.featuresType, this.randomIntFromInterval(0, this.gameMode))
         );
         if(this.gameMode >= NORMAL)
             this.sampleModel.Update(null, null, null, new Head(this.featuresType, 
-                                                            this.randomIntFromInterval(0, this.gameMode - 1)));
+                                                            this.randomIntFromInterval(0, this.gameMode)));
         if(this.gameMode == HARD)
             this.sampleModel.Update(null, null, null, null, new Body(this.featuresType, 
-                                                            this.randomIntFromInterval(0, this.gameMode - 1)));
+                                                            this.randomIntFromInterval(0, this.gameMode)));
+        
+        this.mainModel = new Model(null,
+                                   new Eyes(this.featuresType, COLOR.EMPTY),
+                                   new Nose(this.featuresType, COLOR.EMPTY),     
+                                   new Mouth(this.featuresType, COLOR.EMPTY),
+                                   new Head(this.featuresType, COLOR.EMPTY),
+                                   new Body(this.featuresType, COLOR.EMPTY));
     }
 
     randomIntFromInterval(min: number, max: number) { // min and max included 

@@ -55,9 +55,15 @@ export default class GameUI extends cc.Component {
         else {
             var node = cc.instantiate(this.mainModel);
             node.scale = 0.35;
-            node.y = 0;
+            node.y = -20;
+            var green = cc.instantiate(this.Green.node);
+            green.position = new cc.Vec3(node.x + 400, node.y + 120,0);
+            var red = cc.instantiate(this.Red.node);
+            red.position = new cc.Vec3(node.x + 400, node.y + 20, 0);
+            green.scale = red.scale = 1.7;
+            node.addChild(green);
+            node.addChild(red);
             cc.find("Canvas/SlideShow").addChild(node);
-            //node.position = new cc.Vec3(0,0,0);
         }            
     }
 

@@ -14,6 +14,7 @@ export enum HEADTYPE {
 }
 
 export enum COLOR {
+    EMPTY,
     GREEN,
     BLUE,
     YELLOW,
