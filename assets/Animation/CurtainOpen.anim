@@ -1,0 +1,73 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "CurtainSliding",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.23333333333333334,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "1599cdf7-f7ef-40ff-a47a-84df995830a4"
+            }
+          },
+          {
+            "frame": 0.016666666666666666,
+            "value": {
+              "__uuid__": "955d82c9-e830-435d-94a8-8f41618dcc3a"
+            }
+          },
+          {
+            "frame": 0.05,
+            "value": {
+              "__uuid__": "30e33888-b0f6-46fd-9e9c-4e36356422b6"
+            }
+          },
+          {
+            "frame": 0.06666666666666667,
+            "value": {
+              "__uuid__": "46c79fbd-d591-48a3-97be-e8a5bf4a50e8"
+            }
+          },
+          {
+            "frame": 0.11666666666666667,
+            "value": {
+              "__uuid__": "e0252694-9366-44cb-abe6-36847d4c3ebd"
+            }
+          },
+          {
+            "frame": 0.13333333333333333,
+            "value": {
+              "__uuid__": "14e2e26f-3b5d-42f7-a5a5-74a4f544d1a8"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "f9a4eaf5-aeb9-4932-a0ab-b6576a508fc2"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "10451ec6-db83-46bb-9858-e700acea848b"
+            }
+          },
+          {
+            "frame": 0.21666666666666667,
+            "value": {
+              "__uuid__": "ca05d867-a31c-491b-9c57-2536971d3529"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

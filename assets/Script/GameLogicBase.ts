@@ -14,6 +14,8 @@ import SetItem from "./SetItem";
 export default class GameLogicBase extends cc.Component {
     @property({type: cc.Node})
     ModelTemplate: cc.Node = null
+    @property({type: cc.Node})
+    MysticalModel: cc.Node = null
     @property({type: [cc.Prefab]})
     Models = []
     @property({type: [cc.Prefab]})
@@ -30,6 +32,10 @@ export default class GameLogicBase extends cc.Component {
 
     start () {
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
+        this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen", 1);
+        this.MysticalModel.active = true;
+        this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainClose", 5);
+        this.MysticalModel.active = false;
         this.NewSection();
     }
 

@@ -34,6 +34,10 @@ export default class GameUI extends cc.Component {
     Green: cc.Label = null
     @property(cc.Label)
     Red: cc.Label = null
+    @property(cc.Node)
+    Curtain: cc.Node = null
+    @property(cc.Node)
+    SampleModel: cc.Node = null
 
     gameLogic: GameLogicBase;
     HeadList: cc.SpriteFrame[];
@@ -50,8 +54,9 @@ export default class GameUI extends cc.Component {
         var result = this.gameLogic.CheckResult();
         this.Green.string = result[0].toString();
         this.Red.string = result[1].toString();
-        if(result[0] == 5)
-            return; //game won
+        if(result[0] == 5) { 
+            this.OnGameWin();
+        }
         else {
             var node = cc.instantiate(this.mainModel);
             node.scale = 0.35;
@@ -65,6 +70,14 @@ export default class GameUI extends cc.Component {
             node.addChild(red);
             cc.find("Canvas/SlideShow").addChild(node);
         }            
+    }
+
+    OnGameWin () {
+        var node = cc.instantiate(this.mainModel);
+        node.scale = 0.5;
+        cc.find("Canvas").addChild(node);
+        node.position = this.SampleModel.position;
+        this.Curtain.getChildByName("img").getComponent(cc.Animation).play();
     }
 
     InitModelType (headtype:HEADTYPE) {
