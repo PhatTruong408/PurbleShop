@@ -1,5 +1,4 @@
 const {ccclass, property} = cc._decorator;
-const FEATURE_NUM = 5;
 const EASY = 3;
 const NORMAL = 4;
 const HARD = 5;
@@ -40,31 +39,32 @@ export default class GameLogicBase extends cc.Component {
     }
 
     CreateSampleModel() {
-        this.featuresType = this.randomIntFromInterval(0, TYPE.END - 1);
+        this.featuresType = this.getRandomArbitrary(0, TYPE.END);
 
         this.sampleModel = new Model(
-            this.randomIntFromInterval(0, SKIN.END - 1),       
-            new Eyes(this.featuresType, this.randomIntFromInterval(0, this.gameMode)),
-            new Nose(this.featuresType, this.randomIntFromInterval(0, this.gameMode)),     
-            new Mouth(this.featuresType, this.randomIntFromInterval(0, this.gameMode))
+            this.getRandomArbitrary(0, SKIN.END - 1),       
+            new Eyes(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),
+            new Nose(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),     
+            new Mouth(this.featuresType, this.getRandomArbitrary(0, this.gameMode))
         );
         if(this.gameMode >= NORMAL)
             this.sampleModel.Update(null, null, null, new Head(this.featuresType, 
-                                                            this.randomIntFromInterval(0, this.gameMode)));
+                                                            this.getRandomArbitrary(0, this.gameMode)));
         if(this.gameMode == HARD)
             this.sampleModel.Update(null, null, null, null, new Body(this.featuresType, 
-                                                            this.randomIntFromInterval(0, this.gameMode)));
+                                                            this.getRandomArbitrary(0, this.gameMode)));
         
-        this.mainModel = new Model(null,
-                                   new Eyes(this.featuresType, COLOR.EMPTY),
-                                   new Nose(this.featuresType, COLOR.EMPTY),     
-                                   new Mouth(this.featuresType, COLOR.EMPTY),
-                                   new Head(this.featuresType, COLOR.EMPTY),
-                                   new Body(this.featuresType, COLOR.EMPTY));
+        this.mainModel = new Model();
+        // this.mainModel = new Model(null,
+        //                            new Eyes(this.featuresType, COLOR.EMPTY),
+        //                            new Nose(this.featuresType, COLOR.EMPTY),     
+        //                            new Mouth(this.featuresType, COLOR.EMPTY),
+        //                            new Head(this.featuresType, COLOR.EMPTY),
+        //                            new Body(this.featuresType, COLOR.EMPTY));
     }
 
-    randomIntFromInterval(min: number, max: number) { // min and max included 
-        return Math.floor(Math.random() * (max - min + 1) + min);
+    getRandomArbitrary(min: number, max: number) { // max excluded 
+        return Math.floor(Math.random() * (max - min) + min);
     }
       
     Initialize() {

@@ -77,7 +77,7 @@ export default class GameUI extends cc.Component {
         node.scale = 0.5;
         cc.find("Canvas").addChild(node);
         node.position = this.SampleModel.position;
-        this.Curtain.getChildByName("img").getComponent(cc.Animation).play();
+        this.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen", 1);
     }
 
     InitModelType (headtype:HEADTYPE) {

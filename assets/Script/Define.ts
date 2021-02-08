@@ -14,7 +14,7 @@ export enum HEADTYPE {
 }
 
 export enum COLOR {
-    EMPTY,
+    //EMPTY,
     GREEN,
     BLUE,
     YELLOW,
@@ -38,5 +38,6 @@ export enum FEATURE {
     EYES,
     NOSE,
     MOUTH,
-    BODY
+    BODY,
+    NUM
 }

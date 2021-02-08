@@ -1,4 +1,4 @@
-import { SKIN } from "./Define";
+import { FEATURE, SKIN } from "./Define";
 import Feature, { Body, Eyes, Nose, Head, Mouth } from "./Feature";
 
 export class Model {
@@ -32,23 +32,20 @@ export class Model {
     Compare(model:Model) : Array<number> {
         var green: number = 0;
         var red: number = 0;
-        
-        if(this.head.color == model.head.color)
-            green++;
-        else red++;
-        if(this.eyes.color == model.eyes.color)
-            green++;
-        else red++;
-        if(this.nose.color == model.nose.color)
-            green++;
-        else red++;
-        if(this.mouth.color == model.mouth.color)
-            green++;
-        else red++;
-        if(this.body.color == model.body.color)
-            green++;
-        else red++;
 
+        for(var i = 0; i < FEATURE.NUM; i++) {
+            for(var j = 0; j < FEATURE.NUM; j++) {
+                if(this.features[i].color == model.features[i].color) {
+                    green++;
+                    break
+                }
+                else {
+                    if(this.features[i].color == model.features[j].color) {
+                        red++;
+                    }
+                }
+            }
+        }
 
         return [green, red];
     }

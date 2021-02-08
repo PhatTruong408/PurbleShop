@@ -33,30 +33,25 @@ export default class SetItem extends cc.Component{
     EyesClicked() {
         this.gameLogic.mainModel.Update(this.eyes, null, null, null, null);
         this.gameUI.UpdateMainModel(FEATURE.EYES, this.eyes);
-        console.log("EyesClicked: color: " + this.eyes.color.toString());
     }
 
     NoseClicked() {
         this.gameLogic.mainModel.Update(null, this.eyes, null, null, null);
         this.gameUI.UpdateMainModel(FEATURE.NOSE, this.nose);
-        console.log("NoseClicked: color: " + this.nose.color.toString());
     }
 
     MouthClicked() {
         this.gameLogic.mainModel.Update(null, null, this.mouth, null, null);
         this.gameUI.UpdateMainModel(FEATURE.MOUTH, this.mouth);
-        console.log("MouthClicked: color: " + this.mouth.color.toString());
     }
 
     HeadClicked() {
         this.gameLogic.mainModel.Update(null, null, null, this.head, null);
         this.gameUI.UpdateMainModel(FEATURE.HEAD, this.head);
-        console.log("HeadClicked: color: " + this.head.color.toString());
     }
 
     BodyClicked() {
         this.gameLogic.mainModel.Update(null, null, null, null, this.body);
         this.gameUI.UpdateMainModel(FEATURE.BODY, this.body);
-        console.log("BodyClicked: color: " + this.body.color.toString());
     }
 }
