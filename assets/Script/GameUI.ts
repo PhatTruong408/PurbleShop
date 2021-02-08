@@ -29,6 +29,8 @@ export default class GameUI extends cc.Component {
     MouthList = [];
     @property({type: [cc.SpriteFrame]})
     BodyList = [];
+    @property({type: cc.ScrollView})
+    ScrollView: cc.ScrollView = null
 
     @property(cc.Label)
     Green: cc.Label = null
@@ -70,6 +72,14 @@ export default class GameUI extends cc.Component {
             node.addChild(red);
             cc.find("Canvas/SlideShow").addChild(node);
         }            
+    }
+
+    OnPressedNextButton() {
+        this.ScrollView.scrollToPercentHorizontal(-20);
+    }
+
+    OnPressedBackButton() {
+        this.ScrollView.scrollToPercentHorizontal(20);
     }
 
     OnGameWin () {
