@@ -70,16 +70,19 @@ export default class GameUI extends cc.Component {
             green.scale = red.scale = 1.7;
             node.addChild(green);
             node.addChild(red);
-            cc.find("Canvas/SlideShow").addChild(node);
+            var content = this.ScrollView.node.getChildByName("viewport").getChildByName("content");
+            content.addChild(node);
+            //content.width += node.width;
+            //content.getComponent(cc.Layout).updateLayout();
         }            
     }
 
     OnPressedNextButton() {
-        this.ScrollView.scrollToPercentHorizontal(-20);
+        this.ScrollView.scrollToOffset(this.ScrollView.getContentPosition().subtract(new cc.Vec2(140, 0)));
     }
 
     OnPressedBackButton() {
-        this.ScrollView.scrollToPercentHorizontal(20);
+        this.ScrollView.scrollToOffset(this.ScrollView.getContentPosition().add(new cc.Vec2(140, 0)));
     }
 
     OnGameWin () {
