@@ -63,6 +63,7 @@ export default class GameUI extends cc.Component {
             var node = cc.instantiate(this.mainModel);
             node.scale = 0.35;
             node.y = -20;
+
             var green = cc.instantiate(this.Green.node);
             green.position = new cc.Vec3(node.x + 400, node.y + 120,0);
             var red = cc.instantiate(this.Red.node);
@@ -70,19 +71,22 @@ export default class GameUI extends cc.Component {
             green.scale = red.scale = 1.7;
             node.addChild(green);
             node.addChild(red);
+
             var content = this.ScrollView.node.getChildByName("viewport").getChildByName("content");
             content.addChild(node);
-            //content.width += node.width;
-            //content.getComponent(cc.Layout).updateLayout();
+
+            //this.ScrollView.scrollToRight();
         }            
     }
 
     OnPressedNextButton() {
-        this.ScrollView.scrollToOffset(this.ScrollView.getContentPosition().subtract(new cc.Vec2(140, 0)));
+        //this.ScrollView.setContentPosition(this.ScrollView.getContentPosition().subtract(new cc.Vec2(140, 0)));
+        this.ScrollView.scrollToOffset(this.ScrollView.getScrollOffset().subtract(new cc.Vec2(140, 0)));
     }
 
     OnPressedBackButton() {
-        this.ScrollView.scrollToOffset(this.ScrollView.getContentPosition().add(new cc.Vec2(140, 0)));
+        //this.ScrollView.setContentPosition(this.ScrollView.getContentPosition().add(new cc.Vec2(140, 0)));
+        this.ScrollView.scrollToOffset(this.ScrollView.getScrollOffset().add(new cc.Vec2(140, 0)));
     }
 
     OnGameWin () {
