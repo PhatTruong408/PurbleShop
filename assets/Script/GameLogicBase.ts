@@ -3,7 +3,6 @@ const EASY = 3;
 const NORMAL = 4;
 const HARD = 5;
 
-
 import { COLOR, SKIN, TYPE } from "./Define";
 import Feature, { Head, Eyes, Mouth, Body, Nose } from "./Feature";
 import GameUI from "./GameUI";

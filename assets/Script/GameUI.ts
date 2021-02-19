@@ -1,13 +1,8 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 import GameLogicBase from "./GameLogicBase"
 import {FEATURE, HEADTYPE} from "./Define";
 import Feature from "./Feature";
 const {ccclass, property} = cc._decorator;
+const LIFE = 13;
 
 @ccclass
 export default class GameUI extends cc.Component {
@@ -42,17 +37,20 @@ export default class GameUI extends cc.Component {
     SampleModel: cc.Node = null
 
     gameLogic: GameLogicBase;
-    HeadList: cc.SpriteFrame[];
-    EyesList: cc.SpriteFrame[];
+    headList: cc.SpriteFrame[];
+    eyesList: cc.SpriteFrame[];
+    checkCount: number;
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
 
     start () {
         this.gameLogic = cc.find("Canvas/GameController").getComponent(GameLogicBase);
+        this.checkCount = 0;
     }
 
     OnPressedCheckButton () {
+        this.checkCount++;
         var result = this.gameLogic.CheckResult();
         this.Green.string = result[0].toString();
         this.Red.string = result[1].toString();
@@ -74,19 +72,24 @@ export default class GameUI extends cc.Component {
 
             var content = this.ScrollView.node.getChildByName("viewport").getChildByName("content");
             content.addChild(node);
-
-            //this.ScrollView.scrollToRight();
+            
+            if(this.checkCount > 5)
+                this.ScrollView.scrollToRight(0.1);
+            if(this.checkCount == LIFE)
+                this.OnGameOver();
         }            
     }
 
     OnPressedNextButton() {
         //this.ScrollView.setContentPosition(this.ScrollView.getContentPosition().subtract(new cc.Vec2(140, 0)));
-        this.ScrollView.scrollToOffset(this.ScrollView.getScrollOffset().subtract(new cc.Vec2(140, 0)));
+        console.log(this.ScrollView.getScrollOffset());
+        this.ScrollView.scrollToOffset(this.ScrollView.getScrollOffset().add(new cc.Vec2(140, 0)), 0.1);
     }
 
     OnPressedBackButton() {
         //this.ScrollView.setContentPosition(this.ScrollView.getContentPosition().add(new cc.Vec2(140, 0)));
-        this.ScrollView.scrollToOffset(this.ScrollView.getScrollOffset().add(new cc.Vec2(140, 0)));
+        console.log(this.ScrollView.getScrollOffset());
+        this.ScrollView.scrollToOffset(this.ScrollView.getScrollOffset().subtract(new cc.Vec2(140, 0)), 0.1);
     }
 
     OnGameWin () {
@@ -97,19 +100,23 @@ export default class GameUI extends cc.Component {
         this.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen", 1);
     }
 
+    OnGameOver() {
+        cc.game.restart();
+    }
+
     InitModelType (headtype:HEADTYPE) {
         switch (headtype) {
             case HEADTYPE.ROUND:
-                this.HeadList = this.RoundHeadList;
-                this.EyesList = this.CloseEyesList;
+                this.headList = this.RoundHeadList;
+                this.eyesList = this.CloseEyesList;
                 break;
             case HEADTYPE.CONE:
-                this.HeadList = this.ConeHeadList;
-                this.EyesList = this.CloseEyesList;
+                this.headList = this.ConeHeadList;
+                this.eyesList = this.CloseEyesList;
                 break;
             case HEADTYPE.HEART:
-                this.HeadList = this.HeartHeadList;
-                this.EyesList = this.WideEyesList;
+                this.headList = this.HeartHeadList;
+                this.eyesList = this.WideEyesList;
                 break;
         }
     }
@@ -118,13 +125,13 @@ export default class GameUI extends cc.Component {
         switch (id) {
             case FEATURE.HEAD: {
                 var child = this.mainModel.getChildByName("head");
-                child.getComponent(cc.Sprite).spriteFrame = this.HeadList[feature.color];
+                child.getComponent(cc.Sprite).spriteFrame = this.headList[feature.color];
                 child.active = true;
                 break;
             }
             case FEATURE.EYES: {
                 var child = this.mainModel.getChildByName("eyes");
-                child.getComponent(cc.Sprite).spriteFrame = this.EyesList[feature.color];
+                child.getComponent(cc.Sprite).spriteFrame = this.eyesList[feature.color];
                 child.active = true;
                 break;
             }
