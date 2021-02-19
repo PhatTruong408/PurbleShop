@@ -40,6 +40,7 @@ export default class GameUI extends cc.Component {
     headList: cc.SpriteFrame[];
     eyesList: cc.SpriteFrame[];
     checkCount: number;
+    currentScrollOffset: cc.Vec2;
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
@@ -75,21 +76,22 @@ export default class GameUI extends cc.Component {
             
             if(this.checkCount > 5)
                 this.ScrollView.scrollToRight(0.1);
+            this.currentScrollOffset = this.ScrollView.getMaxScrollOffset();
             if(this.checkCount == LIFE)
                 this.OnGameOver();
         }            
     }
 
     OnPressedNextButton() {
-        //this.ScrollView.setContentPosition(this.ScrollView.getContentPosition().subtract(new cc.Vec2(140, 0)));
-        console.log(this.ScrollView.getScrollOffset());
-        this.ScrollView.scrollToOffset(this.ScrollView.getScrollOffset().add(new cc.Vec2(140, 0)), 0.1);
+        if(this.currentScrollOffset < this.ScrollView.getMaxScrollOffset())
+            this.currentScrollOffset = this.currentScrollOffset.add(new cc.Vec2(140, 0));
+        this.ScrollView.scrollToOffset(this.currentScrollOffset, 0.1);
     }
 
     OnPressedBackButton() {
-        //this.ScrollView.setContentPosition(this.ScrollView.getContentPosition().add(new cc.Vec2(140, 0)));
-        console.log(this.ScrollView.getScrollOffset());
-        this.ScrollView.scrollToOffset(this.ScrollView.getScrollOffset().subtract(new cc.Vec2(140, 0)), 0.1);
+        if(this.currentScrollOffset > cc.Vec2.ZERO)
+            this.currentScrollOffset = this.currentScrollOffset.subtract(new cc.Vec2(140, 0));
+        this.ScrollView.scrollToOffset(this.currentScrollOffset, 0.1);
     }
 
     OnGameWin () {
