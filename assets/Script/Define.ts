@@ -1,9 +1,6 @@
 export enum TYPE {
     A,
     B,
-    C,
-    D,
-    E,
     END,
 }
 

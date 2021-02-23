@@ -1,5 +1,5 @@
 import GameLogicBase from "./GameLogicBase"
-import {FEATURE, HEADTYPE} from "./Define";
+import {COLOR, FEATURE, HEADTYPE} from "./Define";
 import Feature from "./Feature";
 const {ccclass, property} = cc._decorator;
 const LIFE = 13;
@@ -11,9 +11,15 @@ export default class GameUI extends cc.Component {
     @property({type: [cc.SpriteFrame]})
     RoundHeadList = [];
     @property({type: [cc.SpriteFrame]})
+    RoundHeadList2 = [];
+    @property({type: [cc.SpriteFrame]})
     ConeHeadList = [];
     @property({type: [cc.SpriteFrame]})
+    ConeHeadList2 = [];
+    @property({type: [cc.SpriteFrame]})
     HeartHeadList = [];
+    @property({type: [cc.SpriteFrame]})
+    HeartHeadList2 = [];
     @property({type: [cc.SpriteFrame]})
     WideEyesList = [];
     @property({type: [cc.SpriteFrame]})
@@ -109,15 +115,15 @@ export default class GameUI extends cc.Component {
     InitModelType (headtype:HEADTYPE) {
         switch (headtype) {
             case HEADTYPE.ROUND:
-                this.headList = this.RoundHeadList;
+                this.headList = this.gameLogic.featuresType? this.RoundHeadList2 : this.RoundHeadList;
                 this.eyesList = this.CloseEyesList;
                 break;
             case HEADTYPE.CONE:
-                this.headList = this.ConeHeadList;
+                this.headList = this.gameLogic.featuresType? this.ConeHeadList2 : this.ConeHeadList;
                 this.eyesList = this.CloseEyesList;
                 break;
             case HEADTYPE.HEART:
-                this.headList = this.HeartHeadList;
+                this.headList = this.gameLogic.featuresType? this.HeartHeadList2 : this.HeartHeadList;
                 this.eyesList = this.WideEyesList;
                 break;
         }
@@ -128,12 +134,13 @@ export default class GameUI extends cc.Component {
             case FEATURE.HEAD: {
                 var child = this.mainModel.getChildByName("head");
                 child.getComponent(cc.Sprite).spriteFrame = this.headList[feature.color];
+                child.y = this.gameLogic.featuresType? 165 : feature.color == COLOR.GREEN? 190 : 178;
                 child.active = true;
                 break;
             }
             case FEATURE.EYES: {
                 var child = this.mainModel.getChildByName("eyes");
-                child.getComponent(cc.Sprite).spriteFrame = this.eyesList[feature.color];
+                child.getComponent(cc.Sprite).spriteFrame = this.eyesList[feature.color];               
                 child.active = true;
                 break;
             }
