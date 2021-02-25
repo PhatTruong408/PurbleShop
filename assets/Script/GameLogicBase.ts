@@ -16,6 +16,8 @@ export default class GameLogicBase extends cc.Component {
     MysticalModel: cc.Node = null
     @property({type: [cc.Prefab]})
     Models = []
+    @property({type: [cc.SpriteFrame]})
+    MysticalModels = []
     @property({type: [cc.Prefab]})
     SetItems = []
     @property ({type: cc.Node})
@@ -30,10 +32,6 @@ export default class GameLogicBase extends cc.Component {
 
     start () {
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
-        this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen", 1);
-        this.MysticalModel.active = true;
-        this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainClose", 5);
-        this.MysticalModel.active = false;
         this.NewSection();
     }
 
@@ -95,7 +93,17 @@ export default class GameLogicBase extends cc.Component {
 
     NewSection() {
         this.CreateSampleModel();
+        this.Intro();
+        //this.gameUI.PlayIntro();
         this.Initialize();
+    }
+
+    Intro() {
+        this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen");
+        this.MysticalModel.getComponent(cc.Sprite).spriteFrame = this.MysticalModels[this.sampleModel.skin];
+        this.MysticalModel.active = true;
+        //this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainClose");
+        //this.MysticalModel.active = false;
     }
 
     UpdateModel(feature:Feature) {

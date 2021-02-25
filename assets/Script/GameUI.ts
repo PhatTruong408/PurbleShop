@@ -7,7 +7,10 @@ const LIFE = 13;
 @ccclass
 export default class GameUI extends cc.Component {
     mainModel: cc.Node;
+    
 
+    @property({type: [cc.Prefab]})
+    IntroSkin = [];
     @property({type: [cc.SpriteFrame]})
     RoundHeadList = [];
     @property({type: [cc.SpriteFrame]})
@@ -32,7 +35,8 @@ export default class GameUI extends cc.Component {
     BodyList = [];
     @property({type: cc.ScrollView})
     ScrollView: cc.ScrollView = null
-
+    @property({type : [cc.Prefab]})
+    lifeColor: cc.Prefab[] = [];
     @property(cc.Label)
     Green: cc.Label = null
     @property(cc.Label)
@@ -65,27 +69,34 @@ export default class GameUI extends cc.Component {
             this.OnGameWin();
         }
         else {
-            var node = cc.instantiate(this.mainModel);
-            node.scale = 0.35;
-            node.y = -20;
-
-            var green = cc.instantiate(this.Green.node);
-            green.position = new cc.Vec3(node.x + 400, node.y + 120,0);
-            var red = cc.instantiate(this.Red.node);
-            red.position = new cc.Vec3(node.x + 400, node.y + 20, 0);
-            green.scale = red.scale = 1.7;
-            node.addChild(green);
-            node.addChild(red);
-
-            var content = this.ScrollView.node.getChildByName("viewport").getChildByName("content");
-            content.addChild(node);
-            
+            this.AddResultModel();
             if(this.checkCount > 5)
                 this.ScrollView.scrollToRight(0.1);
             this.currentScrollOffset = this.ScrollView.getMaxScrollOffset();
             if(this.checkCount == LIFE)
                 this.OnGameOver();
         }            
+    }
+
+    AddResultModel() {
+        var node = cc.instantiate(this.mainModel);
+        node.scale = 0.3;
+        node.y = -25;
+
+        var green = cc.instantiate(this.Green.node);
+        green.position = new cc.Vec3(node.x + 430, node.y + 120,0);
+        var red = cc.instantiate(this.Red.node);
+        red.position = new cc.Vec3(node.x + 430, node.y + 20, 0);
+        green.scale = red.scale = 2.0;
+        var lifeColor = cc.instantiate(this.lifeColor[this.checkCount -1]);
+        lifeColor.position = new cc.Vec3(node.x + 325, node.y + 270, 0);
+        lifeColor.scaleX = 4.9 ; lifeColor.scaleY = 4;
+        node.addChild(green);
+        node.addChild(red);
+        node.addChild(lifeColor);
+
+        var content = this.ScrollView.node.getChildByName("viewport").getChildByName("content");
+        content.addChild(node);
     }
 
     OnPressedNextButton() {
@@ -102,7 +113,7 @@ export default class GameUI extends cc.Component {
 
     OnGameWin () {
         var node = cc.instantiate(this.mainModel);
-        node.scale = 0.5;
+        node.scale = 0.4;
         cc.find("Canvas").addChild(node);
         node.position = this.SampleModel.position;
         this.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen", 1);
@@ -164,6 +175,30 @@ export default class GameUI extends cc.Component {
             }
         }
     }
+    
+    // PlayIntro() {
+    //     var node = cc.instantiate(this.IntroSkin[this.gameLogic.sampleModel.skin]);
+    //     node.scale = 0.4;
+    //     cc.find("Canvas").addChild(node);
+    //     node.position = this.SampleModel.position;
+        
+    //     var anim = this.Curtain.getChildByName("img").getComponent(cc.Animation);
+    //     var animState = anim.getAnimationState('CurtainOpen');
+
+    //     anim.on('finished', function(event) {
+    //         console.log(event);
+    //         console.log(event.detail);
+    //         if(event.currentTarget == animState) {
+    //             //anim.play('CurtainClose');
+    //             console.log('finish');
+    //         }
+    //     });
+
+    //     anim.play('CurtainOpen');
+        
+    //     //this.Curtain.getChildByName("img").getComponent(cc.Animation).on('finished', event() {})
+    //     //this.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen", 1);
+    // }
 
     // update (dt) {}
 }
