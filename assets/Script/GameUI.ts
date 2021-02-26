@@ -8,7 +8,6 @@ const LIFE = 13;
 export default class GameUI extends cc.Component {
     mainModel: cc.Node;
     
-
     @property({type: [cc.Prefab]})
     IntroSkin = [];
     @property({type: [cc.SpriteFrame]})
@@ -35,8 +34,7 @@ export default class GameUI extends cc.Component {
     BodyList = [];
     @property({type: cc.ScrollView})
     ScrollView: cc.ScrollView = null
-    @property({type : [cc.Prefab]})
-    lifeColor: cc.Prefab[] = [];
+
     @property(cc.Label)
     Green: cc.Label = null
     @property(cc.Label)
@@ -45,6 +43,10 @@ export default class GameUI extends cc.Component {
     Curtain: cc.Node = null
     @property(cc.Node)
     SampleModel: cc.Node = null
+    @property(cc.Button)
+    NextButton: cc.Button = null
+    @property(cc.Button)
+    BackButton: cc.Button = null
 
     gameLogic: GameLogicBase;
     headList: cc.SpriteFrame[];
@@ -75,40 +77,47 @@ export default class GameUI extends cc.Component {
             this.currentScrollOffset = this.ScrollView.getMaxScrollOffset();
             if(this.checkCount == LIFE)
                 this.OnGameOver();
-        }            
+        }
+        this.BackButton.enabled = this.currentScrollOffset > cc.Vec2.ZERO;
+        this.NextButton.enabled = this.currentScrollOffset < this.ScrollView.getMaxScrollOffset();
+        console.log(this.currentScrollOffset)
     }
 
     AddResultModel() {
         var node = cc.instantiate(this.mainModel);
-        node.scale = 0.3;
-        node.y = -25;
+        node.scale = 0.33;
+        node.y = -75;
 
         var green = cc.instantiate(this.Green.node);
-        green.position = new cc.Vec3(node.x + 430, node.y + 120,0);
+        green.position = new cc.Vec3(node.x + 430, node.y + 170,0);
         var red = cc.instantiate(this.Red.node);
-        red.position = new cc.Vec3(node.x + 430, node.y + 20, 0);
+        red.position = new cc.Vec3(node.x + 430, node.y + 70, 0);
         green.scale = red.scale = 2.0;
-        var lifeColor = cc.instantiate(this.lifeColor[this.checkCount -1]);
-        lifeColor.position = new cc.Vec3(node.x + 325, node.y + 270, 0);
-        lifeColor.scaleX = 4.9 ; lifeColor.scaleY = 4;
+
         node.addChild(green);
         node.addChild(red);
-        node.addChild(lifeColor);
 
-        var content = this.ScrollView.node.getChildByName("viewport").getChildByName("content");
+        var content = this.ScrollView.node.getChildByName("viewport").getChildByName("content").getChildByName("LifeColor_" + this.checkCount);
         content.addChild(node);
+        node.position = new cc.Vec3(-10 , -75, 0);
     }
 
     OnPressedNextButton() {
         if(this.currentScrollOffset < this.ScrollView.getMaxScrollOffset())
             this.currentScrollOffset = this.currentScrollOffset.add(new cc.Vec2(140, 0));
         this.ScrollView.scrollToOffset(this.currentScrollOffset, 0.1);
+        this.BackButton.enabled = this.currentScrollOffset > cc.Vec2.ZERO;
+        this.NextButton.enabled = this.currentScrollOffset < this.ScrollView.getMaxScrollOffset();
+        console.log(this.currentScrollOffset)
     }
 
     OnPressedBackButton() {
         if(this.currentScrollOffset > cc.Vec2.ZERO)
             this.currentScrollOffset = this.currentScrollOffset.subtract(new cc.Vec2(140, 0));
         this.ScrollView.scrollToOffset(this.currentScrollOffset, 0.1);
+        this.BackButton.enabled = this.currentScrollOffset > cc.Vec2.ZERO;
+        this.NextButton.enabled = this.currentScrollOffset < this.ScrollView.getMaxScrollOffset();
+        console.log(this.currentScrollOffset)
     }
 
     OnGameWin () {
