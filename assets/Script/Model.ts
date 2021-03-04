@@ -35,6 +35,8 @@ export class Model {
 
         for(var i = 0; i < FEATURE.NUM; i++) {
             for(var j = 0; j < FEATURE.NUM; j++) {
+                if(model.features[i] == null)
+                    return null;
                 if(this.features[i].color == model.features[i].color) {
                     green++;
                     break

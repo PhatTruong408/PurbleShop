@@ -60,11 +60,15 @@ export default class GameUI extends cc.Component {
     start () {
         this.gameLogic = cc.find("Canvas/GameController").getComponent(GameLogicBase);
         this.checkCount = 0;
+        this.currentScrollOffset = cc.Vec2.ZERO;
     }
 
     OnPressedCheckButton () {
-        this.checkCount++;
         var result = this.gameLogic.CheckResult();
+        if(result == null)
+            return;
+        
+        this.checkCount++;
         this.Green.string = result[0].toString();
         this.Red.string = result[1].toString();
         if(result[0] == 5) { 
@@ -72,15 +76,14 @@ export default class GameUI extends cc.Component {
         }
         else {
             this.AddResultModel();
-            if(this.checkCount > 5)
-                this.ScrollView.scrollToRight(0.1);
-            this.currentScrollOffset = this.ScrollView.getMaxScrollOffset();
+            if(this.checkCount > 6) {
+                this.currentScrollOffset = (new cc.Vec2((this.checkCount - 6) * 140, 0));
+                this.DoScroll();;
+            }
             if(this.checkCount == LIFE)
                 this.OnGameOver();
         }
-        this.BackButton.enabled = this.currentScrollOffset > cc.Vec2.ZERO;
-        this.NextButton.enabled = this.currentScrollOffset < this.ScrollView.getMaxScrollOffset();
-        console.log(this.currentScrollOffset)
+        this.CheckActiveButtons();
     }
 
     AddResultModel() {
@@ -103,21 +106,28 @@ export default class GameUI extends cc.Component {
     }
 
     OnPressedNextButton() {
-        if(this.currentScrollOffset < this.ScrollView.getMaxScrollOffset())
-            this.currentScrollOffset = this.currentScrollOffset.add(new cc.Vec2(140, 0));
-        this.ScrollView.scrollToOffset(this.currentScrollOffset, 0.1);
-        this.BackButton.enabled = this.currentScrollOffset > cc.Vec2.ZERO;
-        this.NextButton.enabled = this.currentScrollOffset < this.ScrollView.getMaxScrollOffset();
-        console.log(this.currentScrollOffset)
+        if(this.checkCount > 6)
+            if(this.currentScrollOffset.x < (this.checkCount - 6) * 140)
+                this.currentScrollOffset = this.currentScrollOffset.add(new cc.Vec2(140, 0));
+        this.DoScroll();
+        this.CheckActiveButtons();
     }
 
     OnPressedBackButton() {
         if(this.currentScrollOffset > cc.Vec2.ZERO)
             this.currentScrollOffset = this.currentScrollOffset.subtract(new cc.Vec2(140, 0));
+        this.DoScroll();
+        this.CheckActiveButtons();
+    }
+
+    DoScroll() {
+        this.ScrollView.horizontal = true;
         this.ScrollView.scrollToOffset(this.currentScrollOffset, 0.1);
-        this.BackButton.enabled = this.currentScrollOffset > cc.Vec2.ZERO;
-        this.NextButton.enabled = this.currentScrollOffset < this.ScrollView.getMaxScrollOffset();
-        console.log(this.currentScrollOffset)
+    }
+
+    CheckActiveButtons() {
+        this.BackButton.node.active = this.currentScrollOffset > cc.Vec2.ZERO;
+        this.NextButton.node.active = this.checkCount > 6 ? this.currentScrollOffset.x < (this.checkCount - 6) * 140? true : false : false;
     }
 
     OnGameWin () {
