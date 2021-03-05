@@ -132,10 +132,11 @@ export default class GameUI extends cc.Component {
 
     OnGameWin () {
         var node = cc.instantiate(this.mainModel);
-        node.scale = 0.4;
         cc.find("Canvas").addChild(node);
-        node.position = this.SampleModel.position;
-        this.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen", 1);
+        this.SampleModel.active = false;
+        node.position = this.SampleModel.position.subtract(new cc.Vec3(0 , 30 , 0));
+        node.scale = 0.4;
+        this.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen");
     }
 
     OnGameOver() {
@@ -166,30 +167,36 @@ export default class GameUI extends cc.Component {
                 child.getComponent(cc.Sprite).spriteFrame = this.headList[feature.color];
                 child.y = this.gameLogic.featuresType? 165 : feature.color == COLOR.GREEN? 190 : 178;
                 child.active = true;
+                child.getComponent(cc.Animation).play("Instantiate");
                 break;
             }
             case FEATURE.EYES: {
                 var child = this.mainModel.getChildByName("eyes");
                 child.getComponent(cc.Sprite).spriteFrame = this.eyesList[feature.color];               
                 child.active = true;
+                var anim = child.getComponent(cc.Animation);
+                anim.play("Instantiate");
                 break;
             }
             case FEATURE.NOSE: {
                 var child = this.mainModel.getChildByName("nose");
                 child.getComponent(cc.Sprite).spriteFrame = this.NoseList[feature.color];
                 child.active = true;
+                child.getComponent(cc.Animation).play("Instantiate");
                 break;
             }
             case FEATURE.MOUTH: {
                 var child = this.mainModel.getChildByName("mouth");
                 child.getComponent(cc.Sprite).spriteFrame = this.MouthList[feature.color];
                 child.active = true;
+                child.getComponent(cc.Animation).play("Instantiate");
                 break;
             }
             case FEATURE.BODY: {
                 var child = this.mainModel.getChildByName("body");
                 child.getComponent(cc.Sprite).spriteFrame = this.BodyList[feature.color];
                 child.active = true;
+                child.getComponent(cc.Animation).play("Instantiate");
                 break;
             }
         }

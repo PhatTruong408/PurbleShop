@@ -32,7 +32,7 @@ export default class GameLogicBase extends cc.Component {
 
     start () {
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
-        this.NewSection();
+        cc.game.on(cc.game.EVENT_GAME_INITED, () => this.NewSection());
     }
 
     CreateSampleModel() {
@@ -70,6 +70,7 @@ export default class GameLogicBase extends cc.Component {
         model.position = this.ModelTemplate.position;
         this.node.parent.addChild(model);
         this.gameUI.mainModel = model;
+        model.getComponent(cc.Animation).play("Instantiate")
 
         //Create grid items
         var itemList = []
@@ -94,16 +95,20 @@ export default class GameLogicBase extends cc.Component {
     NewSection() {
         this.CreateSampleModel();
         this.Intro();
-        //this.gameUI.PlayIntro();
-        this.Initialize();
     }
 
     Intro() {
-        this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen");
+        var anim = this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation);
+        anim.play("CurtainOpen");
         this.MysticalModel.getComponent(cc.Sprite).spriteFrame = this.MysticalModels[this.sampleModel.skin];
         this.MysticalModel.active = true;
-        //this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainClose");
-        //this.MysticalModel.active = false;
+        var delay = 4;
+        anim.scheduleOnce(this.timeCallback, delay);
+        anim.scheduleOnce(() => this.Initialize(), delay + 1);
+    }
+
+    timeCallback = function () {
+        this.getComponent(cc.Animation).play("CurtainClose");
     }
 
     UpdateModel(feature:Feature) {
