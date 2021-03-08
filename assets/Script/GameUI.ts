@@ -53,9 +53,6 @@ export default class GameUI extends cc.Component {
     eyesList: cc.SpriteFrame[];
     checkCount: number;
     currentScrollOffset: cc.Vec2;
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
 
     start () {
         this.gameLogic = cc.find("Canvas/GameController").getComponent(GameLogicBase);
@@ -201,30 +198,4 @@ export default class GameUI extends cc.Component {
             }
         }
     }
-    
-    // PlayIntro() {
-    //     var node = cc.instantiate(this.IntroSkin[this.gameLogic.sampleModel.skin]);
-    //     node.scale = 0.4;
-    //     cc.find("Canvas").addChild(node);
-    //     node.position = this.SampleModel.position;
-        
-    //     var anim = this.Curtain.getChildByName("img").getComponent(cc.Animation);
-    //     var animState = anim.getAnimationState('CurtainOpen');
-
-    //     anim.on('finished', function(event) {
-    //         console.log(event);
-    //         console.log(event.detail);
-    //         if(event.currentTarget == animState) {
-    //             //anim.play('CurtainClose');
-    //             console.log('finish');
-    //         }
-    //     });
-
-    //     anim.play('CurtainOpen');
-        
-    //     //this.Curtain.getChildByName("img").getComponent(cc.Animation).on('finished', event() {})
-    //     //this.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen", 1);
-    // }
-
-    // update (dt) {}
 }

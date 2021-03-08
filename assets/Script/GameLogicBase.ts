@@ -23,6 +23,11 @@ export default class GameLogicBase extends cc.Component {
     @property ({type: cc.Node})
     itemLayoutPanel = null
 
+    @property({type: [cc.Node]})
+    SmallShiningPoints = [];
+    @property({type: [cc.Node]})
+    BigShiningPoints = [];
+
     gameMode = HARD;
     featuresType:TYPE;
     sampleModel:Model;
@@ -52,12 +57,6 @@ export default class GameLogicBase extends cc.Component {
                                                             this.getRandomArbitrary(0, this.gameMode)));
         
         this.mainModel = new Model();
-        // this.mainModel = new Model(null,
-        //                            new Eyes(this.featuresType, COLOR.EMPTY),
-        //                            new Nose(this.featuresType, COLOR.EMPTY),     
-        //                            new Mouth(this.featuresType, COLOR.EMPTY),
-        //                            new Head(this.featuresType, COLOR.EMPTY),
-        //                            new Body(this.featuresType, COLOR.EMPTY));
     }
 
     getRandomArbitrary(min: number, max: number) { // max excluded 
@@ -78,7 +77,7 @@ export default class GameLogicBase extends cc.Component {
         {           
             var setItem = cc.instantiate(this.SetItems[i]);
             this.itemLayoutPanel.addChild(setItem);
-            
+            setItem.getChildByName("decorate_" + this.gameMode.toString()).active = true;
             itemList[i] = [];
             for(var j = 0; j < this.gameMode; j++) {     
                 itemList[i][j] = new Feature(this.featuresType, i, this.sampleModel.skin % 3);
@@ -90,6 +89,7 @@ export default class GameLogicBase extends cc.Component {
                                                 itemList[i][3],
                                                 itemList[i][4]);
         }
+        this.itemLayoutPanel.getComponent(cc.Layout).spacingX = 300 / this.gameMode;
     }
 
     NewSection() {
@@ -103,12 +103,27 @@ export default class GameLogicBase extends cc.Component {
         this.MysticalModel.getComponent(cc.Sprite).spriteFrame = this.MysticalModels[this.sampleModel.skin];
         this.MysticalModel.active = true;
         var delay = 4;
-        anim.scheduleOnce(this.timeCallback, delay);
-        anim.scheduleOnce(() => this.Initialize(), delay + 1);
+
+        anim.scheduleOnce(() => this.PlaySmallShiningPoints, 1);
+        anim.scheduleOnce(this.CloseCurtain, delay);
+        anim.scheduleOnce(() => this.Initialize(), delay - 1);
+        anim.scheduleOnce(() => this.PlayBigShiningPoints(), delay);
     }
 
-    timeCallback = function () {
+    CloseCurtain = function () {
         this.getComponent(cc.Animation).play("CurtainClose");
+    }
+
+    PlaySmallShiningPoints() {
+        this. SmallShiningPoints.forEach((point) => {
+            point.getComponent(cc.Animation).play("ShiningPoint");
+        })
+    }
+
+    PlayBigShiningPoints() {
+        this.BigShiningPoints.forEach((point) => {
+            point.getComponent(cc.Animation).play("ShiningPoint");
+        })
     }
 
     UpdateModel(feature:Feature) {
@@ -117,8 +132,5 @@ export default class GameLogicBase extends cc.Component {
     
     CheckResult() {
         return this.sampleModel.Compare(this.mainModel);
-        //call UI to update result
-    }
-
-    // update (dt) {}     
+    }  
 }
