@@ -1,23 +1,24 @@
-import { FEATURE, SKIN } from "./Define";
+import { Define as def } from "./Define";
 import Feature, { Body, Eyes, Nose, Head, Mouth } from "./Feature";
+import GameLogicBase from "./GameLogicBase"
 
 export class Model {
-    skin:SKIN;
-    head:Head;
+    skin:def.SKIN;
     eyes:Eyes;
-    mouth:Mouth;
-    body:Body;
     nose:Nose;
+    mouth:Mouth;
+    head:Head;
+    body:Body;
     features:Feature[];
 
-    constructor(skin:SKIN = null, eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, head:Head = null, body:Body = null) {
+    constructor(skin:def.SKIN = null, eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, head:Head = null, body:Body = null) {
         this.skin = skin;
         this.eyes = eyes;
         this.nose = nose;
         this.mouth = mouth;
         this.head = head;
         this.body = body;
-        this.features = [this.head, this.eyes, this.nose, this.mouth, this.body];
+        this.features = [this.eyes, this.nose, this.mouth, this.head, this.body];
     }
 
     Update(eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, head:Head = null, body:Body = null) {
@@ -29,17 +30,17 @@ export class Model {
         this.features = [this.head, this.eyes, this.nose, this.mouth, this.body];  
     }
 
-    Compare(model:Model) : Array<number> {
+    Compare(model:Model, number:number) : Array<number> {
         var green: number = 0;
         var red: number = 0;
 
-        for(var i = 0; i < FEATURE.NUM; i++) {
-            for(var j = 0; j < FEATURE.NUM; j++) {
+        for(var i = 0; i < number; i++) {
+            for(var j = 0; j < number; j++) {
                 if(model.features[i] == null)
                     return null;
                 if(this.features[i].color == model.features[i].color) {
                     green++;
-                    break
+                    break;
                 }
                 else {
                     if(this.features[i].color == model.features[j].color) {

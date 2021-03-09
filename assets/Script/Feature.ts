@@ -1,14 +1,14 @@
-import {TYPE, COLOR, HEADTYPE} from "./Define";
+import {Define as def} from "./Define";
 
 export default class Feature {
-    constructor(type:TYPE, color:COLOR, headtype:HEADTYPE = HEADTYPE.ROUND) {
+    constructor(type:def.TYPE, color:def.COLOR, headtype:def.HEADTYPE = def.HEADTYPE.ROUND) {
         this.type = type;
         this.color = color;
         this.headType = headtype;
     }
-    headType:HEADTYPE;
-    type:TYPE;
-    color:COLOR;
+    headType:def.HEADTYPE;
+    type:def.TYPE;
+    color:def.COLOR;
 }
 
 export class Head extends Feature {}

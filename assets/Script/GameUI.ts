@@ -1,8 +1,7 @@
 import GameLogicBase from "./GameLogicBase"
-import {COLOR, FEATURE, HEADTYPE} from "./Define";
+import {Define as def} from "./Define";
 import Feature from "./Feature";
 const {ccclass, property} = cc._decorator;
-const LIFE = 13;
 
 @ccclass
 export default class GameUI extends cc.Component {
@@ -35,10 +34,11 @@ export default class GameUI extends cc.Component {
     @property({type: cc.ScrollView})
     ScrollView: cc.ScrollView = null
 
-    @property(cc.Label)
-    Green: cc.Label = null
-    @property(cc.Label)
-    Red: cc.Label = null
+    @property(cc.Node)
+    Green: cc.Node = null
+    @property(cc.Node)
+    Red: cc.Node = null
+
     @property(cc.Node)
     Curtain: cc.Node = null
     @property(cc.Node)
@@ -53,22 +53,42 @@ export default class GameUI extends cc.Component {
     eyesList: cc.SpriteFrame[];
     checkCount: number;
     currentScrollOffset: cc.Vec2;
+    LIFE: number;
 
     start () {
         this.gameLogic = cc.find("Canvas/GameController").getComponent(GameLogicBase);
         this.checkCount = 0;
         this.currentScrollOffset = cc.Vec2.ZERO;
+        switch(this.gameLogic.gameMode) {
+            case def.GameMode.EASY:
+            case def.GameMode.HARD:
+                this.LIFE = 13;
+                break;
+            case def.GameMode.NORMAL:
+                this.LIFE = 6;
+                break;
+        }
     }
 
     OnPressedCheckButton () {
         var result = this.gameLogic.CheckResult();
         if(result == null)
             return;
-        
+        this.Green.active = true;
         this.checkCount++;
-        this.Green.string = result[0].toString();
-        this.Red.string = result[1].toString();
-        if(result[0] == 5) { 
+        switch(this.gameLogic.gameMode) { 
+            case def.GameMode.EASY:
+            case def.GameMode.NORMAL:
+                this.Red.active = false;
+                this.Green.getChildByName("number").getComponent(cc.Label).string = result[0].toString();
+                break;
+            case def.GameMode.HARD:
+                this.Red.active = true;
+                this.Green.getChildByName("number").getComponent(cc.Label).string = result[0].toString();
+                this.Red.getChildByName("number").getComponent(cc.Label).string = result[1].toString();
+                break;          
+        }
+        if(result[0] == this.gameLogic.gameMode) { 
             this.OnGameWin();
         }
         else {
@@ -77,7 +97,7 @@ export default class GameUI extends cc.Component {
                 this.currentScrollOffset = (new cc.Vec2((this.checkCount - 6) * 140, 0));
                 this.DoScroll();;
             }
-            if(this.checkCount == LIFE)
+            if(this.checkCount == this.LIFE)
                 this.OnGameOver();
         }
         this.CheckActiveButtons();
@@ -88,14 +108,23 @@ export default class GameUI extends cc.Component {
         node.scale = 0.33;
         node.y = -75;
 
-        var green = cc.instantiate(this.Green.node);
-        green.position = new cc.Vec3(node.x + 430, node.y + 170,0);
-        var red = cc.instantiate(this.Red.node);
-        red.position = new cc.Vec3(node.x + 430, node.y + 70, 0);
-        green.scale = red.scale = 2.0;
-
-        node.addChild(green);
-        node.addChild(red);
+        switch(this.gameLogic.gameMode) { 
+            case def.GameMode.EASY:
+            case def.GameMode.NORMAL:
+                var green = cc.instantiate(this.Green.getChildByName("number"));
+                green.position = new cc.Vec3(node.x + 430, node.y + 170,0);                
+                green.scale = 2.0;
+                node.addChild(green);
+            case def.GameMode.HARD:
+                var green = cc.instantiate(this.Green.getChildByName("number"));
+                green.position = new cc.Vec3(node.x + 430, node.y + 170,0);
+                var red = cc.instantiate(this.Red.getChildByName("number"));
+                red.position = new cc.Vec3(node.x + 430, node.y + 70, 0);
+                green.scale = red.scale = 2.0;
+                node.addChild(green);
+                node.addChild(red);
+                break;
+        }   
 
         var content = this.ScrollView.node.getChildByName("viewport").getChildByName("content").getChildByName("LifeColor_" + this.checkCount);
         content.addChild(node);
@@ -140,34 +169,34 @@ export default class GameUI extends cc.Component {
         cc.game.restart();
     }
 
-    InitModelType (headtype:HEADTYPE) {
+    InitModelType (headtype:def.HEADTYPE) {
         switch (headtype) {
-            case HEADTYPE.ROUND:
+            case def.HEADTYPE.ROUND:
                 this.headList = this.gameLogic.featuresType? this.RoundHeadList2 : this.RoundHeadList;
                 this.eyesList = this.CloseEyesList;
                 break;
-            case HEADTYPE.CONE:
+            case def.HEADTYPE.CONE:
                 this.headList = this.gameLogic.featuresType? this.ConeHeadList2 : this.ConeHeadList;
                 this.eyesList = this.CloseEyesList;
                 break;
-            case HEADTYPE.HEART:
+            case def.HEADTYPE.HEART:
                 this.headList = this.gameLogic.featuresType? this.HeartHeadList2 : this.HeartHeadList;
                 this.eyesList = this.WideEyesList;
                 break;
         }
     }
 
-    UpdateMainModel (id:FEATURE, feature:Feature) {
+    UpdateMainModel (id:def.FEATURE, feature:Feature) {
         switch (id) {
-            case FEATURE.HEAD: {
+            case def.FEATURE.HEAD: {
                 var child = this.mainModel.getChildByName("head");
                 child.getComponent(cc.Sprite).spriteFrame = this.headList[feature.color];
-                child.y = this.gameLogic.featuresType? 165 : feature.color == COLOR.GREEN? 190 : 178;
+                child.y = this.gameLogic.featuresType? 165 : feature.color == def.COLOR.GREEN? 190 : 178;
                 child.active = true;
                 child.getComponent(cc.Animation).play("Instantiate");
                 break;
             }
-            case FEATURE.EYES: {
+            case def.FEATURE.EYES: {
                 var child = this.mainModel.getChildByName("eyes");
                 child.getComponent(cc.Sprite).spriteFrame = this.eyesList[feature.color];               
                 child.active = true;
@@ -175,25 +204,29 @@ export default class GameUI extends cc.Component {
                 anim.play("Instantiate");
                 break;
             }
-            case FEATURE.NOSE: {
+            case def.FEATURE.NOSE: {
                 var child = this.mainModel.getChildByName("nose");
                 child.getComponent(cc.Sprite).spriteFrame = this.NoseList[feature.color];
                 child.active = true;
                 child.getComponent(cc.Animation).play("Instantiate");
                 break;
             }
-            case FEATURE.MOUTH: {
-                var child = this.mainModel.getChildByName("mouth");
-                child.getComponent(cc.Sprite).spriteFrame = this.MouthList[feature.color];
-                child.active = true;
-                child.getComponent(cc.Animation).play("Instantiate");
+            case def.FEATURE.MOUTH: {
+                if(this.gameLogic.gameMode > def.GameMode.EASY) {
+                    var child = this.mainModel.getChildByName("mouth");
+                    child.getComponent(cc.Sprite).spriteFrame = this.MouthList[feature.color];
+                    child.active = true;
+                    child.getComponent(cc.Animation).play("Instantiate");
+                }
                 break;
             }
-            case FEATURE.BODY: {
-                var child = this.mainModel.getChildByName("body");
-                child.getComponent(cc.Sprite).spriteFrame = this.BodyList[feature.color];
-                child.active = true;
-                child.getComponent(cc.Animation).play("Instantiate");
+            case def.FEATURE.BODY: {
+                if(this.gameLogic.gameMode > def.GameMode.NORMAL) {
+                    var child = this.mainModel.getChildByName("body");
+                    child.getComponent(cc.Sprite).spriteFrame = this.BodyList[feature.color];
+                    child.active = true;
+                    child.getComponent(cc.Animation).play("Instantiate");
+                }
                 break;
             }
         }

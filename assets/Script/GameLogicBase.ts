@@ -1,9 +1,6 @@
 const {ccclass, property} = cc._decorator;
-const EASY = 3;
-const NORMAL = 4;
-const HARD = 5;
 
-import { COLOR, SKIN, TYPE } from "./Define";
+import {Define as def} from "./Define";
 import Feature, { Head, Eyes, Mouth, Body, Nose } from "./Feature";
 import GameUI from "./GameUI";
 import { Model } from "./Model";
@@ -28,8 +25,8 @@ export default class GameLogicBase extends cc.Component {
     @property({type: [cc.Node]})
     BigShiningPoints = [];
 
-    gameMode = HARD;
-    featuresType:TYPE;
+    gameMode = def.GameMode.EASY;
+    featuresType:def.TYPE;
     sampleModel:Model;
     mainModel:Model;
     result:number[];
@@ -41,18 +38,18 @@ export default class GameLogicBase extends cc.Component {
     }
 
     CreateSampleModel() {
-        this.featuresType = this.getRandomArbitrary(0, TYPE.END);
+        this.featuresType = this.getRandomArbitrary(0, def.TYPE.END);
 
         this.sampleModel = new Model(
-            this.getRandomArbitrary(0, SKIN.END - 1),       
+            this.getRandomArbitrary(0, def.SKIN.END - 1),       
             new Eyes(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),
             new Nose(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),     
             new Mouth(this.featuresType, this.getRandomArbitrary(0, this.gameMode))
         );
-        if(this.gameMode >= NORMAL)
+        if(this.gameMode >= def.GameMode.NORMAL)
             this.sampleModel.Update(null, null, null, new Head(this.featuresType, 
                                                             this.getRandomArbitrary(0, this.gameMode)));
-        if(this.gameMode == HARD)
+        if(this.gameMode == def.GameMode.HARD)
             this.sampleModel.Update(null, null, null, null, new Body(this.featuresType, 
                                                             this.getRandomArbitrary(0, this.gameMode)));
         
@@ -104,26 +101,35 @@ export default class GameLogicBase extends cc.Component {
         this.MysticalModel.active = true;
         var delay = 4;
 
-        anim.scheduleOnce(() => this.PlaySmallShiningPoints, 1);
+        anim.scheduleOnce(() => this.PlaySmallShiningPoints(0), 1.0);
+        anim.scheduleOnce(() => this.PlaySmallShiningPoints(1), 1.3);
+        anim.scheduleOnce(() => this.PlaySmallShiningPoints(2), 1.6);
+
+
         anim.scheduleOnce(this.CloseCurtain, delay);
         anim.scheduleOnce(() => this.Initialize(), delay - 1);
-        anim.scheduleOnce(() => this.PlayBigShiningPoints(), delay);
+
+        anim.scheduleOnce(() => this.PlayBigShiningPoints(0), delay);
+        anim.scheduleOnce(() => this.PlayBigShiningPoints(1), delay + 0.3);
+        anim.scheduleOnce(() => this.PlayBigShiningPoints(2), delay + 0.6);
     }
 
     CloseCurtain = function () {
         this.getComponent(cc.Animation).play("CurtainClose");
     }
 
-    PlaySmallShiningPoints() {
-        this. SmallShiningPoints.forEach((point) => {
-            point.getComponent(cc.Animation).play("ShiningPoint");
-        })
+    PlaySmallShiningPoints(index:number) {
+        var point = cc.instantiate(this.SmallShiningPoints[index]);            
+        this.node.parent.addChild(point);
+        point.active = true;
+        point.getComponent(cc.Animation).play("ShiningPoint");
     }
 
-    PlayBigShiningPoints() {
-        this.BigShiningPoints.forEach((point) => {
-            point.getComponent(cc.Animation).play("ShiningPoint");
-        })
+    PlayBigShiningPoints(index:number) {
+        var point = cc.instantiate(this.BigShiningPoints[index]);            
+        this.node.parent.addChild(point);
+        point.active = true;
+        point.getComponent(cc.Animation).play("ShiningPoint");
     }
 
     UpdateModel(feature:Feature) {
@@ -131,6 +137,6 @@ export default class GameLogicBase extends cc.Component {
     }
     
     CheckResult() {
-        return this.sampleModel.Compare(this.mainModel);
+        return this.sampleModel.Compare(this.mainModel, this.gameMode);
     }  
 }
