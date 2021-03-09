@@ -46,7 +46,7 @@ export default class GameLogicBase extends cc.Component {
             new Nose(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),     
             new Mouth(this.featuresType, this.getRandomArbitrary(0, this.gameMode))
         );
-        if(this.gameMode >= def.GameMode.NORMAL)
+        if(this.gameMode > def.GameMode.EASY)
             this.sampleModel.Update(null, null, null, new Head(this.featuresType, 
                                                             this.getRandomArbitrary(0, this.gameMode)));
         if(this.gameMode == def.GameMode.HARD)

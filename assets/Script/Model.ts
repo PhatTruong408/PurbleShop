@@ -27,7 +27,7 @@ export class Model {
         this.mouth = mouth != null? mouth : this.mouth;
         this.head = head != null? head : this.head;
         this.body = body != null? body : this.body;
-        this.features = [this.head, this.eyes, this.nose, this.mouth, this.body];  
+        this.features = [this.eyes, this.nose, this.mouth, this.head, this.body];  
     }
 
     Compare(model:Model, number:number) : Array<number> {

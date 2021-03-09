@@ -188,14 +188,6 @@ export default class GameUI extends cc.Component {
 
     UpdateMainModel (id:def.FEATURE, feature:Feature) {
         switch (id) {
-            case def.FEATURE.HEAD: {
-                var child = this.mainModel.getChildByName("head");
-                child.getComponent(cc.Sprite).spriteFrame = this.headList[feature.color];
-                child.y = this.gameLogic.featuresType? 165 : feature.color == def.COLOR.GREEN? 190 : 178;
-                child.active = true;
-                child.getComponent(cc.Animation).play("Instantiate");
-                break;
-            }
             case def.FEATURE.EYES: {
                 var child = this.mainModel.getChildByName("eyes");
                 child.getComponent(cc.Sprite).spriteFrame = this.eyesList[feature.color];               
@@ -211,10 +203,18 @@ export default class GameUI extends cc.Component {
                 child.getComponent(cc.Animation).play("Instantiate");
                 break;
             }
-            case def.FEATURE.MOUTH: {
+            case def.FEATURE.MOUTH: {                
+                var child = this.mainModel.getChildByName("mouth");
+                child.getComponent(cc.Sprite).spriteFrame = this.MouthList[feature.color];
+                child.active = true;
+                child.getComponent(cc.Animation).play("Instantiate");
+                break;
+            }
+            case def.FEATURE.HEAD: {
                 if(this.gameLogic.gameMode > def.GameMode.EASY) {
-                    var child = this.mainModel.getChildByName("mouth");
-                    child.getComponent(cc.Sprite).spriteFrame = this.MouthList[feature.color];
+                    var child = this.mainModel.getChildByName("head");
+                    child.getComponent(cc.Sprite).spriteFrame = this.headList[feature.color];
+                    child.y = this.gameLogic.featuresType? 165 : feature.color == def.COLOR.GREEN? 190 : 178;
                     child.active = true;
                     child.getComponent(cc.Animation).play("Instantiate");
                 }

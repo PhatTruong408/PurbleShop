@@ -18,16 +18,16 @@ export default class SetItem extends cc.Component{
 
     resourcePath:string;
 
-    Init(head:Head = null, eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, body:Body = null) {
-        this.head = head;
+    Init(eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, head:Head = null, body:Body = null) {  
         this.eyes = eyes;
         this.nose = nose;
         this.mouth = mouth;
+        this.head = head;
         this.body = body;
         
         this.gameLogic = cc.find("Canvas/GameController").getComponent(GameLogicBase);
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
-        this.gameUI.InitModelType(this.head.headType);
+        this.gameUI.InitModelType(this.eyes.headType);
     }
 
     EyesClicked() {
