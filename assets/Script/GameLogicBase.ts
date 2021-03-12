@@ -31,9 +31,20 @@ export default class GameLogicBase extends cc.Component {
     mainModel:Model;
     result:number[];
     gameUI:GameUI;
+    LIFE : number;
+    guessedModel: Model[] = [];
 
     start () {
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
+        switch(this.gameMode) {
+            case def.GameMode.EASY:
+            case def.GameMode.HARD:
+                this.LIFE = 13;
+                break;
+            case def.GameMode.NORMAL:
+                this.LIFE = 6;
+                break;
+        }
         cc.game.on(cc.game.EVENT_GAME_INITED, () => this.NewSection());
     }
 
@@ -137,6 +148,16 @@ export default class GameLogicBase extends cc.Component {
     }
     
     CheckResult() {
+        var isDuplicate = false;
+        for(var i = 0 ; i<this.guessedModel.length; i++) {
+            if (this.guessedModel[i].Compare(this.mainModel, this.gameMode)[0] == this.gameMode)
+                isDuplicate = true;             
+        }
+        if(isDuplicate)
+            return null;
+        var newModel = new Model();
+        newModel.Clone(this.mainModel);
+        this.guessedModel.push(newModel);
         return this.sampleModel.Compare(this.mainModel, this.gameMode);
     }  
 }

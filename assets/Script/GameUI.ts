@@ -53,21 +53,11 @@ export default class GameUI extends cc.Component {
     eyesList: cc.SpriteFrame[];
     checkCount: number;
     currentScrollOffset: cc.Vec2;
-    LIFE: number;
 
     start () {
         this.gameLogic = cc.find("Canvas/GameController").getComponent(GameLogicBase);
         this.checkCount = 0;
         this.currentScrollOffset = cc.Vec2.ZERO;
-        switch(this.gameLogic.gameMode) {
-            case def.GameMode.EASY:
-            case def.GameMode.HARD:
-                this.LIFE = 13;
-                break;
-            case def.GameMode.NORMAL:
-                this.LIFE = 6;
-                break;
-        }
     }
 
     OnPressedCheckButton () {
@@ -97,7 +87,7 @@ export default class GameUI extends cc.Component {
                 this.currentScrollOffset = (new cc.Vec2((this.checkCount - 6) * 140, 0));
                 this.DoScroll();;
             }
-            if(this.checkCount == this.LIFE)
+            if(this.checkCount == this.gameLogic.LIFE)
                 this.OnGameOver();
         }
         this.CheckActiveButtons();

@@ -21,6 +21,16 @@ export class Model {
         this.features = [this.eyes, this.nose, this.mouth, this.head, this.body];
     }
 
+    Clone(model: Model) {
+        this.skin = model.skin;
+        this.eyes = model.eyes;
+        this.nose = model.nose;
+        this.mouth = model.mouth;
+        this.head = model.head;
+        this.body = model.body;
+        this.features = [model.eyes, model.nose, model.mouth, model.head, model.body];
+    }
+
     Update(eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, head:Head = null, body:Body = null) {
         this.eyes = eyes != null? eyes : this.eyes;
         this.nose = nose != null? nose : this.nose;
