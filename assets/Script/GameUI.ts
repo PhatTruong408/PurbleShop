@@ -38,6 +38,8 @@ export default class GameUI extends cc.Component {
     Green: cc.Node = null
     @property(cc.Node)
     Red: cc.Node = null
+    @property({type: cc.Node})
+    ParticleEffect: cc.Node = null
 
     @property(cc.Node)
     Curtain: cc.Node = null
@@ -153,6 +155,26 @@ export default class GameUI extends cc.Component {
         node.position = this.SampleModel.position.subtract(new cc.Vec3(0 , 30 , 0));
         node.scale = 0.4;
         this.Curtain.getChildByName("img").getComponent(cc.Animation).play("CurtainOpen");
+
+        var particle = cc.instantiate(this.ParticleEffect);            
+        this.node.parent.addChild(particle);
+        particle.active = true;
+        // var seq = 
+        //     cc.sequence(
+        //         cc.moveBy(2, 200, 0),
+        //         cc.moveBy(-2, 250, 0),
+        //         cc.moveBy(2, 300, 0),
+        //         cc.moveBy(-2, 350, 0)
+        //     );
+
+        // this.ParticleEffect.runAction(seq);
+
+        cc.tween(particle)
+        .to(0.5, { position: cc.v3(-145, -100, 0) })
+        .to(1, { position: cc.v3(-300, 55, 0) })
+        .to(1.5, { position: cc.v3(-100, 150, 0) })
+        .to(2, { position: cc.v3(-200, 200, 0), opacity: 0 })
+        .start()
     }
 
     OnGameOver() {

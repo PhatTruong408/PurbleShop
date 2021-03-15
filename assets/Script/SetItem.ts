@@ -1,5 +1,5 @@
 import GameLogicBase from "./GameLogicBase"
-import Feature, { Head, Eyes, Mouth, Body, Nose } from "./Feature";
+import { Head, Eyes, Mouth, Body, Nose } from "./Feature";
 import GameUI from "./GameUI"
 import { Define as def } from "./Define";
 const {ccclass, property} = cc._decorator;

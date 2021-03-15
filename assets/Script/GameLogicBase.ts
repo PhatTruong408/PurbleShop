@@ -96,6 +96,8 @@ export default class GameLogicBase extends cc.Component {
                                                 itemList[i][2],
                                                 itemList[i][3],
                                                 itemList[i][4]);
+            setItem.getChildByName("layout").getChildByName("HeadTemplate").active = itemList[i][3] == null? false : true;
+            setItem.getChildByName("layout").getChildByName("BodyTemplate").active = itemList[i][4] == null? false : true;
         }
         this.itemLayoutPanel.getComponent(cc.Layout).spacingX = 300 / this.gameMode;
     }
