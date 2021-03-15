@@ -159,15 +159,6 @@ export default class GameUI extends cc.Component {
         var particle = cc.instantiate(this.ParticleEffect);            
         this.node.parent.addChild(particle);
         particle.active = true;
-        // var seq = 
-        //     cc.sequence(
-        //         cc.moveBy(2, 200, 0),
-        //         cc.moveBy(-2, 250, 0),
-        //         cc.moveBy(2, 300, 0),
-        //         cc.moveBy(-2, 350, 0)
-        //     );
-
-        // this.ParticleEffect.runAction(seq);
 
         cc.tween(particle)
         .to(0.5, { position: cc.v3(-145, -100, 0) })
