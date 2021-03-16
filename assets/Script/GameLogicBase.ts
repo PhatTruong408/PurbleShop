@@ -25,7 +25,7 @@ export default class GameLogicBase extends cc.Component {
     @property({type: [cc.Node]})
     BigShiningPoints = [];
 
-    gameMode = def.GameMode.EASY;
+    gameMode = def.GameMode.HARD;
     featuresType:def.TYPE;
     sampleModel:Model;
     mainModel:Model;
@@ -62,8 +62,7 @@ export default class GameLogicBase extends cc.Component {
                                                             this.getRandomArbitrary(0, this.gameMode)));
         if(this.gameMode == def.GameMode.HARD)
             this.sampleModel.Update(null, null, null, null, new Body(this.featuresType, 
-                                                            this.getRandomArbitrary(0, this.gameMode)));
-        
+                                                            this.getRandomArbitrary(0, this.gameMode)));        
         this.mainModel = new Model();
     }
 
