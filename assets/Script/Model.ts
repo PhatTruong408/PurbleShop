@@ -31,6 +31,14 @@ export class Model {
         this.features = [model.eyes, model.nose, model.mouth, model.head, model.body];
     }
 
+    IsValid(number:number) {
+        var count = 0;
+        for (let i of this.features)
+            if (i != null)
+                count++;
+        return count == number;
+    }
+
     Update(eyes:Eyes = null, nose:Nose = null, mouth:Mouth = null, head:Head = null, body:Body = null) {
         this.eyes = eyes != null? eyes : this.eyes;
         this.nose = nose != null? nose : this.nose;

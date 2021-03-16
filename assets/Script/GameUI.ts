@@ -87,7 +87,7 @@ export default class GameUI extends cc.Component {
             this.AddResultModel();
             if(this.checkCount > 6) {
                 this.currentScrollOffset = (new cc.Vec2((this.checkCount - 6) * 140, 0));
-                this.DoScroll();;
+                this.DoScroll();
             }
             if(this.checkCount == this.gameLogic.LIFE)
                 this.OnGameOver();

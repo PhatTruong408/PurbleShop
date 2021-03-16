@@ -151,12 +151,16 @@ export default class GameLogicBase extends cc.Component {
     
     CheckResult() {
         var isDuplicate = false;
+        if(!this.mainModel.IsValid(this.gameMode))
+            return null;
+
         for(var i = 0 ; i<this.guessedModel.length; i++) {
-            if (this.guessedModel[i].Compare(this.mainModel, this.gameMode)[0] == this.gameMode)
+            if(this.guessedModel[i].Compare(this.mainModel, this.gameMode)[0] == this.gameMode)
                 isDuplicate = true;             
         }
         if(isDuplicate)
             return null;
+        
         var newModel = new Model();
         newModel.Clone(this.mainModel);
         this.guessedModel.push(newModel);
