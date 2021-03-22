@@ -33,25 +33,30 @@ export default class SetItem extends cc.Component{
     EyesClicked() {
         this.gameLogic.mainModel.Update(this.eyes, null, null, null, null);
         this.gameUI.UpdateMainModel(def.FEATURE.EYES, this.eyes);
+        this.gameLogic.audioController.PlayButtonTap();
     }
 
     NoseClicked() {
         this.gameLogic.mainModel.Update(null, this.eyes, null, null, null);
         this.gameUI.UpdateMainModel(def.FEATURE.NOSE, this.nose);
+        this.gameLogic.audioController.PlayButtonTap();
     }
 
     MouthClicked() {
         this.gameLogic.mainModel.Update(null, null, this.mouth, null, null);
         this.gameUI.UpdateMainModel(def.FEATURE.MOUTH, this.mouth);
+        this.gameLogic.audioController.PlayButtonTap();
     }
 
     HeadClicked() {
         this.gameLogic.mainModel.Update(null, null, null, this.head, null);
         this.gameUI.UpdateMainModel(def.FEATURE.HEAD, this.head);
+        this.gameLogic.audioController.PlayButtonTap();
     }
 
     BodyClicked() {
         this.gameLogic.mainModel.Update(null, null, null, null, this.body);
         this.gameUI.UpdateMainModel(def.FEATURE.BODY, this.body);
+        this.gameLogic.audioController.PlayButtonTap();
     }
 }

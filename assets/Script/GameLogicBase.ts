@@ -5,6 +5,7 @@ import Feature, { Head, Eyes, Mouth, Body, Nose } from "./Feature";
 import GameUI from "./GameUI";
 import { Model } from "./Model";
 import SetItem from "./SetItem";
+import AudioController from "./AudioController";
 @ccclass
 export default class GameLogicBase extends cc.Component {
     @property({type: cc.Node})
@@ -25,6 +26,7 @@ export default class GameLogicBase extends cc.Component {
     @property({type: [cc.Node]})
     BigShiningPoints = [];
 
+    audioController : AudioController;
     gameMode = def.GameMode.HARD;
     featuresType:def.TYPE;
     sampleModel:Model;
@@ -36,6 +38,7 @@ export default class GameLogicBase extends cc.Component {
 
     start () {
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
+        this.audioController = cc.find("Canvas/AudioController").getComponent(AudioController);
         switch(this.gameMode) {
             case def.GameMode.EASY:
             case def.GameMode.HARD:
@@ -76,7 +79,8 @@ export default class GameLogicBase extends cc.Component {
         model.position = this.ModelTemplate.position;
         this.node.parent.addChild(model);
         this.gameUI.mainModel = model;
-        model.getComponent(cc.Animation).play("Instantiate")
+        model.getComponent(cc.Animation).play("Instantiate");
+        this.audioController.PlayGameStart();
 
         //Create grid items
         var itemList = []
@@ -109,6 +113,7 @@ export default class GameLogicBase extends cc.Component {
     Intro() {
         var anim = this.gameUI.Curtain.getChildByName("img").getComponent(cc.Animation);
         anim.play("CurtainOpen");
+        this.audioController.PlayCurtainOpen();
         this.MysticalModel.getComponent(cc.Sprite).spriteFrame = this.MysticalModels[this.sampleModel.skin];
         this.MysticalModel.active = true;
         var delay = 4;

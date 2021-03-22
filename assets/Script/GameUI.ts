@@ -63,6 +63,7 @@ export default class GameUI extends cc.Component {
     }
 
     OnPressedCheckButton () {
+        this.gameLogic.audioController.PlayButtonTap();
         var result = this.gameLogic.CheckResult();
         if(result == null)
             return;
@@ -124,6 +125,7 @@ export default class GameUI extends cc.Component {
     }
 
     OnPressedNextButton() {
+        this.gameLogic.audioController.PlayButtonTap();
         if(this.checkCount > 6)
             if(this.currentScrollOffset.x < (this.checkCount - 6) * 140)
                 this.currentScrollOffset = this.currentScrollOffset.add(new cc.Vec2(140, 0));
@@ -132,6 +134,7 @@ export default class GameUI extends cc.Component {
     }
 
     OnPressedBackButton() {
+        this.gameLogic.audioController.PlayButtonTap();
         if(this.currentScrollOffset > cc.Vec2.ZERO)
             this.currentScrollOffset = this.currentScrollOffset.subtract(new cc.Vec2(140, 0));
         this.DoScroll();
@@ -159,6 +162,7 @@ export default class GameUI extends cc.Component {
         var particle = cc.instantiate(this.ParticleEffect);            
         this.node.parent.addChild(particle);
         particle.active = true;
+        this.gameLogic.audioController.PlayGameWin();
 
         cc.tween(particle)
         .to(0.5, { position: cc.v3(-145, -100, 0) })
@@ -169,7 +173,8 @@ export default class GameUI extends cc.Component {
     }
 
     OnGameOver() {
-        cc.game.restart();
+        //cc.game.restart();
+        this.gameLogic.audioController.PlayGameLose();
     }
 
     InitModelType (headtype:def.HEADTYPE) {
