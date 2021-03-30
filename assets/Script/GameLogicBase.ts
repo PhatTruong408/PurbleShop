@@ -54,9 +54,9 @@ export default class GameLogicBase extends cc.Component {
     }
 
     CreateSampleModel() {
-        this.featuresType = this.getRandomArbitrary(0, def.TYPE.END);
-        this.sampleModel = new Model(
-            this.getRandomArbitrary(0, def.SKIN.END - 1),       
+        this.featuresType = def.TYPE.A;// this.getRandomArbitrary(0, def.TYPE.END);
+        this.sampleModel = new Model(def.SKIN.YELLOW_2,
+            //this.getRandomArbitrary(0, def.SKIN.END - 1),       
             new Eyes(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),
             new Nose(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),     
             new Mouth(this.featuresType, this.getRandomArbitrary(0, this.gameMode))

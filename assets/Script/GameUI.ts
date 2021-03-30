@@ -232,6 +232,11 @@ export default class GameUI extends cc.Component {
                     var child = this.mainModel.getChildByName("head");
                     child.getComponent(cc.Sprite).spriteFrame = this.headList[feature.color];
                     child.y = this.gameLogic.featuresType? 165 : feature.color == def.COLOR.GREEN? 190 : 178;
+                    if(this.gameLogic.sampleModel.skin == def.SKIN.YELLOW_2)
+                        if (feature.color == def.COLOR.PURPLE)
+                            child.y = 160;
+                        else if (feature.color == def.COLOR.GREEN)
+                            child.y = 185;
                     child.active = true;
                     child.getComponent(cc.Animation).play("Instantiate");
                 }
