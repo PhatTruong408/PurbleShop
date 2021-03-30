@@ -1,6 +1,7 @@
 import GameLogicBase from "./GameLogicBase"
 import {Define as def} from "./Define";
 import Feature from "./Feature";
+import SetItem from "./SetItem";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -175,6 +176,14 @@ export default class GameUI extends cc.Component {
     OnGameOver() {
         //cc.game.restart();
         this.gameLogic.audioController.PlayGameLose();
+    }
+
+    InitSetItems(setItem, index: number) {     
+        setItem.getChildByName("layout").getChildByName("EyesTemplate").getComponent(cc.Sprite).spriteFrame = this.eyesList[index];
+        setItem.getChildByName("layout").getChildByName("NoseTemplate").getComponent(cc.Sprite).spriteFrame = this.NoseList[index];
+        setItem.getChildByName("layout").getChildByName("MouthTemplate").getComponent(cc.Sprite).spriteFrame = this.MouthList[index];
+        setItem.getChildByName("layout").getChildByName("HeadTemplate").getComponent(cc.Sprite).spriteFrame = this.headList[index];
+        setItem.getChildByName("layout").getChildByName("BodyTemplate").getComponent(cc.Sprite).spriteFrame = this.BodyList[index];
     }
 
     InitModelType (headtype:def.HEADTYPE) {

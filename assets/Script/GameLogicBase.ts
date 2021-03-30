@@ -17,7 +17,9 @@ export default class GameLogicBase extends cc.Component {
     @property({type: [cc.SpriteFrame]})
     MysticalModels = []
     @property({type: [cc.Prefab]})
-    SetItems = []
+    SetItemsA = []
+    @property({type: [cc.Prefab]})
+    SetItemsB = []
     @property ({type: cc.Node})
     itemLayoutPanel = null
 
@@ -53,7 +55,6 @@ export default class GameLogicBase extends cc.Component {
 
     CreateSampleModel() {
         this.featuresType = this.getRandomArbitrary(0, def.TYPE.END);
-
         this.sampleModel = new Model(
             this.getRandomArbitrary(0, def.SKIN.END - 1),       
             new Eyes(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),
@@ -83,17 +84,22 @@ export default class GameLogicBase extends cc.Component {
         this.audioController.PlayGameStart();
 
         //Create grid items
-        var itemList = []
+        var itemList = [];
         for(var i = 0; i < this.gameMode; i++)
-        {           
-            var setItem = cc.instantiate(this.SetItems[i]);
+        {     
+            if(this.featuresType == def.TYPE.A)      
+                var setItem = cc.instantiate(this.SetItemsA[i]);
+            else 
+                var setItem = cc.instantiate(this.SetItemsB[i]);
             this.itemLayoutPanel.addChild(setItem);
             setItem.getChildByName("decorate_" + this.gameMode.toString()).active = true;
             itemList[i] = [];
             for(var j = 0; j < this.gameMode; j++) {     
                 itemList[i][j] = new Feature(this.featuresType, i, this.sampleModel.skin % 3);
             }
-
+            var headtype = itemList[i][0].headType;
+            //this.gameUI.InitModelType(headtype);
+            //this.gameUI.InitSetItems(setItem, i);
             setItem.getComponent(SetItem).Init(itemList[i][0], 
                                                 itemList[i][1],
                                                 itemList[i][2],
@@ -102,6 +108,7 @@ export default class GameLogicBase extends cc.Component {
             setItem.getChildByName("layout").getChildByName("HeadTemplate").active = itemList[i][3] == null? false : true;
             setItem.getChildByName("layout").getChildByName("BodyTemplate").active = itemList[i][4] == null? false : true;
         }
+        this.gameUI.InitModelType(headtype);
         this.itemLayoutPanel.getComponent(cc.Layout).spacingX = 300 / this.gameMode;
     }
 

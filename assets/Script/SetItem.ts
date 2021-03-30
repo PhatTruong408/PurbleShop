@@ -27,7 +27,6 @@ export default class SetItem extends cc.Component{
         
         this.gameLogic = cc.find("Canvas/GameController").getComponent(GameLogicBase);
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
-        this.gameUI.InitModelType(this.eyes.headType);
     }
 
     EyesClicked() {

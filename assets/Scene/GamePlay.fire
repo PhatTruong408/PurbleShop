@@ -6377,7 +6377,7 @@
         "__uuid__": "d0fda64c-141f-45bf-bf45-80228d29435d"
       }
     ],
-    "SetItems": [
+    "SetItemsA": [
       {
         "__uuid__": "25a3a99f-cc9d-4a8c-9e8c-01f8ad6a2a95"
       },
@@ -6392,6 +6392,23 @@
       },
       {
         "__uuid__": "0201f430-dc02-4bf6-99ee-d1a7a16ac612"
+      }
+    ],
+    "SetItemsB": [
+      {
+        "__uuid__": "cafd011f-3b88-4c22-a818-ad567aca861a"
+      },
+      {
+        "__uuid__": "c3f3a30c-af43-4dc9-ad30-0a049b800adb"
+      },
+      {
+        "__uuid__": "3d2946e7-69c8-41de-8903-01138f789652"
+      },
+      {
+        "__uuid__": "626eeecf-5a8e-4675-813c-a5e248bcf327"
+      },
+      {
+        "__uuid__": "e9cdddf8-f175-4c65-b016-fdc200798ec3"
       }
     ],
     "itemLayoutPanel": {
@@ -7432,7 +7449,7 @@
       "array": [
         0,
         0,
-        275.51336804502023,
+        274.5300529996671,
         0,
         0,
         0,
@@ -7554,7 +7571,7 @@
     "_id": "dasJZW29tPjLxWNMQd2xBO"
   },
   {
-    "__type__": "9bc22HYEU9DXbxjw5ZJ3fc3",
+    "__type__": "94c2aCF7JpHSJaCbm4gQpRo",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -7578,7 +7595,7 @@
         "__uuid__": "b320c0b6-e77e-46e2-82e7-9b9cd6a30b87"
       }
     ],
-    "_id": "acnCBCoDhBRbgrtC9vjxeu"
+    "_id": "c7FSxH6DVLnbZrNZD5KBtg"
   },
   {
     "__type__": "cc.Node",
