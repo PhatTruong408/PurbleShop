@@ -54,9 +54,9 @@ export default class GameLogicBase extends cc.Component {
     }
 
     CreateSampleModel() {
-        this.featuresType = def.TYPE.A;// this.getRandomArbitrary(0, def.TYPE.END);
-        this.sampleModel = new Model(def.SKIN.YELLOW_2,
-            //this.getRandomArbitrary(0, def.SKIN.END - 1),       
+        this.featuresType = this.getRandomArbitrary(0, def.TYPE.END);
+        this.sampleModel = new Model(
+            this.getRandomArbitrary(0, def.SKIN.END - 1),       
             new Eyes(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),
             new Nose(this.featuresType, this.getRandomArbitrary(0, this.gameMode)),     
             new Mouth(this.featuresType, this.getRandomArbitrary(0, this.gameMode))
@@ -98,8 +98,6 @@ export default class GameLogicBase extends cc.Component {
                 itemList[i][j] = new Feature(this.featuresType, i, this.sampleModel.skin % 3);
             }
             var headtype = itemList[i][0].headType;
-            //this.gameUI.InitModelType(headtype);
-            //this.gameUI.InitSetItems(setItem, i);
             setItem.getComponent(SetItem).Init(itemList[i][0], 
                                                 itemList[i][1],
                                                 itemList[i][2],
