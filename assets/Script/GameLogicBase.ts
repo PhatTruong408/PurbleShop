@@ -38,6 +38,13 @@ export default class GameLogicBase extends cc.Component {
     LIFE : number;
     guessedModel: Model[] = [];
 
+    constructor() {
+        super();
+        window.addEventListener("message", (e) => {
+            this.gameMode = e.data? e.data : this.gameMode;
+        })
+    }
+
     start () {
         this.gameUI = cc.find("Canvas/GameUIManager").getComponent(GameUI);
         this.audioController = cc.find("Canvas/AudioController").getComponent(AudioController);
