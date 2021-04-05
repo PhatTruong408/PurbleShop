@@ -51,7 +51,7 @@ export default class GameLogicBase extends cc.Component {
                 break;
         }
         cc.game.on(cc.game.EVENT_GAME_INITED, () => this.NewSection());
-        cc.director.setClearColor(cc.Color.TRANSPARENT)
+        cc.director.setClearColor(cc.Color.TRANSPARENT);
     }
 
     CreateSampleModel() {
