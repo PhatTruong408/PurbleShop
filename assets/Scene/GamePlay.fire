@@ -5683,10 +5683,10 @@
     },
     "_clips": [
       {
-        "__uuid__": "4d546e9e-112e-4c7a-ab53-14a41fc27a39"
+        "__uuid__": "920c974a-1244-45a8-ae8d-f07b70f522bc"
       },
       {
-        "__uuid__": "920c974a-1244-45a8-ae8d-f07b70f522bc"
+        "__uuid__": "4d546e9e-112e-4c7a-ab53-14a41fc27a39"
       }
     ],
     "playOnLoad": false,
@@ -6382,36 +6382,36 @@
     ],
     "SetItemsA": [
       {
-        "__uuid__": "25a3a99f-cc9d-4a8c-9e8c-01f8ad6a2a95"
+        "__uuid__": "aa8a1aef-2b28-4c1d-83d4-a9561f3674bb"
       },
       {
-        "__uuid__": "1d73e002-7b47-4d5f-841c-fe9e22c2326b"
+        "__uuid__": "ab8005eb-3a66-4809-a0aa-98ed56837de4"
       },
       {
-        "__uuid__": "9f96b04d-010e-4cf4-91ee-be20def6adcf"
+        "__uuid__": "ff73acd5-acce-4483-b8e0-25190a29852e"
       },
       {
-        "__uuid__": "c9d005b1-c55a-47f2-84d0-cd359039ca78"
+        "__uuid__": "aa7e32dd-a53f-40d5-87c6-15af8202aa25"
       },
       {
-        "__uuid__": "0201f430-dc02-4bf6-99ee-d1a7a16ac612"
+        "__uuid__": "5873ad7d-19d2-42fc-8f27-91b82531bbb0"
       }
     ],
     "SetItemsB": [
       {
-        "__uuid__": "cafd011f-3b88-4c22-a818-ad567aca861a"
+        "__uuid__": "281b3296-736d-4f43-a241-6a7f0e98b6b8"
       },
       {
-        "__uuid__": "c3f3a30c-af43-4dc9-ad30-0a049b800adb"
+        "__uuid__": "faad0ef2-9273-48f8-a346-8e53596bf615"
       },
       {
-        "__uuid__": "3d2946e7-69c8-41de-8903-01138f789652"
+        "__uuid__": "043f434c-0b4f-4d44-8b13-e0f0bc38c0c6"
       },
       {
-        "__uuid__": "626eeecf-5a8e-4675-813c-a5e248bcf327"
+        "__uuid__": "0e60a5b4-8b92-42b8-aa68-173714ed7404"
       },
       {
-        "__uuid__": "e9cdddf8-f175-4c65-b016-fdc200798ec3"
+        "__uuid__": "41843953-293f-47dd-9d62-e3a02b27fe83"
       }
     ],
     "itemLayoutPanel": {
@@ -7452,7 +7452,7 @@
       "array": [
         0,
         0,
-        273.6640275958826,
+        235.55890982936734,
         0,
         0,
         0,
@@ -7574,7 +7574,7 @@
     "_id": "dasJZW29tPjLxWNMQd2xBO"
   },
   {
-    "__type__": "94c2aCF7JpHSJaCbm4gQpRo",
+    "__type__": "59500Q1trRGQrK7f3zdoh35",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -7598,7 +7598,7 @@
         "__uuid__": "b320c0b6-e77e-46e2-82e7-9b9cd6a30b87"
       }
     ],
-    "_id": "c7FSxH6DVLnbZrNZD5KBtg"
+    "_id": "2e+Mj58lVKULQFbUJ8pCZt"
   },
   {
     "__type__": "cc.Node",
