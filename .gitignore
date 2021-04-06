@@ -5,12 +5,6 @@
 library/
 temp/
 local/
-jsb-binary/
-web-desktop/
-web-mobile/
-runtime/
-jsb/
-export/
 
 #/////////////////////////////////////////////////////////////////////////////
 # Logs and databases
@@ -42,6 +36,7 @@ Thumbs.db
 # exvim files
 #/////////////////////////////////////////////////////////////////////////////
 
+*.meta
 *UnityVS.meta
 *.err
 *.err.meta
@@ -71,4 +66,3 @@ quick_gen_project_*_autogen.sh.meta
 
 creator.d.ts
 .vscode/
-*.meta
