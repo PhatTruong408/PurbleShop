@@ -209,7 +209,7 @@ export default class GameLogicBase extends cc.Component {
         cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
 
         //document.getElementsByTagName('iframe')[0].contentWindow.postMessage(JSON.stringify(userData), '*');
-        window.parent.postMessage(JSON.stringify(userData), '*');
+        window.parent.postMessage(userData, '*');
     }
 
     RegisterUserData() {
