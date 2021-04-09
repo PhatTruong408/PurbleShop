@@ -44,6 +44,7 @@ export default class GameLogicBase extends cc.Component {
         window.addEventListener("message", (e) => {
             this.gameMode = e.data ? e.data : this.gameMode;
         });
+        cc.macro.ENABLE_TRANSPARENT_CANVAS = true;
     }
 
     start() {
@@ -59,7 +60,7 @@ export default class GameLogicBase extends cc.Component {
                 break;
         }
         cc.game.on(cc.game.EVENT_GAME_INITED, () => this.NewSection());
-        cc.Camera.main.backgroundColor = cc.Color.RED;
+        cc.Camera.main.backgroundColor = cc.Color.TRANSPARENT;
     }
 
     CreateSampleModel() {
