@@ -37,12 +37,13 @@ export default class GameLogicBase extends cc.Component {
     gameUI: GameUI;
     LIFE: number;
     guessedModel: Model[] = [];
+    score: number;
 
     constructor() {
         super();
         window.addEventListener("message", (e) => {
             this.gameMode = e.data ? e.data : this.gameMode;
-        })
+        });
     }
 
     start() {
@@ -58,7 +59,7 @@ export default class GameLogicBase extends cc.Component {
                 break;
         }
         cc.game.on(cc.game.EVENT_GAME_INITED, () => this.NewSection());
-        cc.Camera.main.backgroundColor = cc.Color.TRANSPARENT;
+        cc.Camera.main.backgroundColor = cc.Color.RED;
     }
 
     CreateSampleModel() {
@@ -181,5 +182,50 @@ export default class GameLogicBase extends cc.Component {
         newModel.Clone(this.mainModel);
         this.guessedModel.push(newModel);
         return this.sampleModel.Compare(this.mainModel, this.gameMode);
+    }
+
+    OnGameOver(result: boolean) {
+        this.audioController.PlayGameLose();
+        this.score = (this.LIFE - this.gameUI.checkCount) * 100;
+        var userData = JSON.parse(cc.sys.localStorage.getItem('userData'));
+        if (userData == null) {
+            this.RegisterUserData();
+            userData = JSON.parse(cc.sys.localStorage.getItem('userData'));
+        }
+
+        userData.Result = result ? "win" : "lose";
+        userData.GameScore = this.score;
+        userData.Guesses = this.gameUI.checkCount;
+        userData.Hints = 0;
+        userData.TotalGuessAndHint = userData.Guesses + userData.Hints;
+        userData.LowGuessAndHintBonus = Math.min(0, 1500 - userData.TotalGuessAndHint * 100);
+        userData.FinalScore = userData.GameScore + userData.LowGuessAndHintBonus;
+        userData.HighScore = userData.HighScore > this.score ? userData.HighScore : this.score;
+        userData.AvgGuess = (userData.AvgGuess * userData.GamesPlay + (this.LIFE - this.gameUI.checkCount)) / 3;
+        userData.GamesPlay++;
+        userData.GamesWon += result;
+        userData.WinPercent = Math.ceil(userData.GamesWon / userData.GamesPlay);
+        cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
+
+        //document.getElementsByTagName('iframe')[0].contentWindow.postMessage(JSON.stringify(userData), '*');
+        window.parent.postMessage(JSON.stringify(userData), '*');
+    }
+
+    RegisterUserData() {
+        var userData = {
+            Result: "win",
+            GameScore: 0,
+            Guesses: 0,
+            Hints: 0,
+            TotalGuessAndHint: 0,
+            LowGuessAndHintBonus: 0,
+            FinalScore: 0,
+            HighScore: 0,
+            AvgGuess: 0,
+            GamesPlay: 0,
+            GamesWon: 0,
+            WinPercent: 0,
+        };
+        cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
     }
 }
