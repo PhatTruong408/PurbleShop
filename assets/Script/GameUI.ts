@@ -83,6 +83,7 @@ export default class GameUI extends cc.Component {
                 break;
         }
         if (result[0] == this.gameLogic.gameMode) {
+            this.gameLogic.audioController.PlayGameWin();
             this.OnGameWin();
         }
         else {
@@ -91,8 +92,10 @@ export default class GameUI extends cc.Component {
                 this.currentScrollOffset = (new cc.Vec2((this.checkCount - 6) * 140, 0));
                 this.DoScroll();
             }
-            if (this.checkCount == this.gameLogic.LIFE)
+            if (this.checkCount == this.gameLogic.LIFE) {
+                this.gameLogic.audioController.PlayGameLose();
                 this.OnGameOver(false);
+            }
         }
         this.CheckActiveButtons();
     }
@@ -163,7 +166,6 @@ export default class GameUI extends cc.Component {
         var particle = cc.instantiate(this.ParticleEffect);
         this.node.parent.addChild(particle);
         particle.active = true;
-        this.gameLogic.audioController.PlayGameWin();
 
         cc.tween(particle)
             .to(0.5, { position: cc.v3(-145, -100, 0) })
