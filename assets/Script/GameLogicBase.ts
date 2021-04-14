@@ -187,45 +187,12 @@ export default class GameLogicBase extends cc.Component {
 
     OnGameOver(result: boolean) {
         this.score = (this.LIFE - this.gameUI.checkCount) * 100;
-        var userData = cc.sys.localStorage.getItem('userData');
-        if (userData == null || userData == undefined) {
-            this.RegisterUserData();
-            userData = JSON.parse(cc.sys.localStorage.getItem('userData'));
-        }
-
-        userData.Result = result ? "win" : "lose";
-        userData.GameScore = this.score;
-        userData.Guesses = this.gameUI.checkCount;
-        userData.Hints = 0;
-        userData.TotalGuessAndHint = userData.Guesses + userData.Hints;
-        userData.LowGuessAndHintBonus = Math.min(0, 1500 - userData.TotalGuessAndHint * 100);
-        userData.FinalScore = userData.GameScore + userData.LowGuessAndHintBonus;
-        userData.HighScore = userData.HighScore > this.score ? userData.HighScore : this.score;
-        userData.AvgGuess = (userData.AvgGuess * userData.GamesPlay + (this.LIFE - this.gameUI.checkCount)) / 3;
-        userData.GamesPlay++;
-        userData.GamesWon += result;
-        userData.WinPercent = Math.ceil(userData.GamesWon / userData.GamesPlay);
-        cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
-
-        //document.getElementsByTagName('iframe')[0].contentWindow.postMessage(JSON.stringify(userData), '*');
-        window.parent.postMessage(userData, '*');
-    }
-
-    RegisterUserData() {
         var userData = {
-            Result: "win",
-            GameScore: 0,
-            Guesses: 0,
-            Hints: 0,
-            TotalGuessAndHint: 0,
-            LowGuessAndHintBonus: 0,
-            FinalScore: 0,
-            HighScore: 0,
-            AvgGuess: 0,
-            GamesPlay: 0,
-            GamesWon: 0,
-            WinPercent: 0,
+            Result: result ? "win" : "lose",
+            GameScore: this.score,
+            Guesses: this.gameUI.checkCount
         };
-        cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
+
+        window.parent.postMessage(userData, '*');
     }
 }
