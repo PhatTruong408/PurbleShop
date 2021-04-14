@@ -188,7 +188,7 @@ export default class GameLogicBase extends cc.Component {
     OnGameOver(result: boolean) {
         this.score = (this.LIFE - this.gameUI.checkCount) * 100;
         var userData = cc.sys.localStorage.getItem('userData');
-        if (userData == "null" || userData == "undefined") {
+        if (userData == null || userData == undefined) {
             this.RegisterUserData();
             userData = JSON.parse(cc.sys.localStorage.getItem('userData'));
         }
